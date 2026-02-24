@@ -8,6 +8,8 @@
 //
 // Test Duration: 5ms simulation (LED blinks at 1Hz, so only 1 toggle expected)
 // Pass Criteria: PC advances, instructions execute, and LED toggles at least once
+//
+// Note: Reset behavior matches PYNQ Z2 board (button pressed = reset active)
 // ============================================================================
 
 module tb_cva6_minimal_top;
@@ -67,7 +69,7 @@ module tb_cva6_minimal_top;
         $display("========================================================================");
         
         // Initialize signals
-        sys_reset_n = 1'b0;
+        sys_reset_n = 1'b1;  // Button pressed = reset active (board-specific behavior)
         cycle_count = 0;
         led_toggle_count = 0;
         led_prev = 4'b0;
@@ -78,10 +80,10 @@ module tb_cva6_minimal_top;
         $display("LOG: %0t : INFO : tb_cva6_minimal_top : dut.reset : expected_value: 1 actual_value: %0b", $time, dut.reset);
         repeat(RESET_CYCLES) @(posedge sys_clock);
         
-        // Release reset
-        sys_reset_n = 1'b1;
+        // Release reset (release button)
+        sys_reset_n = 1'b0;
         @(posedge sys_clock);
-        $display("LOG: %0t : INFO : tb_cva6_minimal_top : sys_reset_n : expected_value: 1 actual_value: %0b", $time, sys_reset_n);
+        $display("LOG: %0t : INFO : tb_cva6_minimal_top : sys_reset_n : expected_value: 0 actual_value: %0b", $time, sys_reset_n);
         $display("========================================================================");
         $display("Starting RISC-V Processor Execution...");
         $display("========================================================================");
