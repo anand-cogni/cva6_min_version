@@ -41,9 +41,9 @@ module cva6_minimal_top (
     wire reset;
     wire clk;
     
-    // Synchronize reset (active-low input to active-high internal)
+    // Synchronize reset (button is active-high on this board)
     assign clk = sys_clock;
-    assign reset = ~reset_sync[3];  // Invert: sys_reset_n is active-low
+    assign reset = reset_sync[3];  // No inversion: button pressed = reset active
     
     always @(posedge clk) begin
         // Synchronize the button input
