@@ -1,0 +1,55 @@
+# ============================================================================
+# DEPS Configuration for CVA6 Minimal RISC-V System
+# ============================================================================
+# Description:
+#   Dependency configuration for CVA6 minimal processor simulation
+#   Contains targets for individual modules and complete system testbench
+#
+# Directory Structure:
+#   src/        - RTL source files
+#   tb/         - Testbench files
+#   sim/        - Simulation configuration (this file)
+#   constraints/- FPGA constraints
+#   doc/        - Documentation
+# ============================================================================
+
+# Individual Module Targets
+# ----------------------------------------------------------------------------
+
+# Boot ROM module
+boot_rom:
+  deps:
+    - ../src/cva6_boot_rom.v
+
+# Data RAM module
+data_ram:
+  deps:
+    - ../src/cva6_data_ram.v
+
+# RISC-V processor core
+riscv_core:
+  deps:
+    - ../src/cva6_min_core.v
+  top: simple_riscv_core
+
+# Top-level system (DUT only)
+cva6_system:
+  deps:
+    - ../src/cva6_boot_rom.v
+    - ../src/cva6_data_ram.v
+    - ../src/cva6_min_core.v
+    - ../src/cva6_minimal_top.v
+  top: cva6_minimal_top
+
+# Complete Testbench Target
+# ----------------------------------------------------------------------------
+
+# Full system testbench - Use this for simulation
+bench_cva6_minimal:
+  deps:
+    - ../src/cva6_boot_rom.v
+    - ../src/cva6_data_ram.v
+    - ../src/cva6_min_core.v
+    - ../src/cva6_minimal_top.v
+    - ../tb/tb_cva6_minimal_top.v
+  top: tb_cva6_minimal_top
