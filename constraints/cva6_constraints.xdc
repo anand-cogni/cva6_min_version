@@ -18,7 +18,7 @@ create_clock -period 8.000 -name sys_clock_pin -waveform {0.000 4.000} -add [get
 ## Reset Button - BTN0
 ## ============================================================================
 ## BTN0 is the rightmost button on PYNQ Z2
-set_property -dict {PACKAGE_PIN D19 IOSTANDARD LVCMOS33} [get_ports sys_reset_n]
+set_property -dict {PACKAGE_PIN M20 IOSTANDARD LVCMOS33} [get_ports sys_reset_n]
 
 ## Debounce the reset button input
 set_false_path -from [get_ports sys_reset_n]
