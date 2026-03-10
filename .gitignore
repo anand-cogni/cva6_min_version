@@ -1,0 +1,11 @@
+# simulation outputs
+*.fst
+*.vcd
+*.fsdb
+
+# verilator build files
+*.gch
+obj_dir/
+
+# simulation folders
+sim/eda.work/
