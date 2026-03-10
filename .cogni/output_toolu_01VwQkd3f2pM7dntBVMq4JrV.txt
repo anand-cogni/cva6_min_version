@@ -1,0 +1,7 @@
+=== Command: cd sim && python3 -m eda_tools.sim sim DEPS.yml bench_cva6_hbm3 (2026-03-05T06:36:56.484Z) ===
+Exit Code: 1
+Output:
+/usr/bin/python3: Error while finding module specification for 'eda_tools.sim' (ModuleNotFoundError: No module named 'eda_tools')
+
+=== End Output ===
+

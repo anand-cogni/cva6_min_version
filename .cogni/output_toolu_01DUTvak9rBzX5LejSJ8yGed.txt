@@ -1,0 +1,16 @@
+=== Command: udevadm info /dev/ttyUSB1 | grep -E "ID_MODEL|ID_VENDOR|ID_SERIAL" (2026-03-06T07:38:01.771Z) ===
+Exit Code: 0
+Output:
+E: ID_MODEL=TUL
+E: ID_MODEL_ENC=TUL
+E: ID_MODEL_ID=6010
+E: ID_SERIAL=Xilinx_TUL_1234-tul
+E: ID_SERIAL_SHORT=1234-tul
+E: ID_VENDOR=Xilinx
+E: ID_VENDOR_ENC=Xilinx
+E: ID_VENDOR_ID=0403
+E: ID_VENDOR_FROM_DATABASE=Future Technology Devices International, Ltd
+E: ID_MODEL_FROM_DATABASE=FT2232C/D/H Dual UART/FIFO IC
+
+=== End Output ===
+

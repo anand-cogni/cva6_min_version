@@ -1,0 +1,7 @@
+=== Command: stty -F /dev/ttyUSB1 115200 -crtscts -echo (2026-03-06T07:33:25.327Z) ===
+Exit Code: 1
+Output:
+stty: /dev/ttyUSB1: Device or resource busy
+
+=== End Output ===
+

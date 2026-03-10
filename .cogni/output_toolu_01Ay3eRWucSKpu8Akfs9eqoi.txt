@@ -1,0 +1,8 @@
+=== Command: echo "Check if board is in SD boot mode (SW1 should be set to SD)"; echo "For PYNQ-Z2: Make sure SD card with PYNQ image is inserted" (2026-03-06T07:39:41.099Z) ===
+Exit Code: 0
+Output:
+Check if board is in SD boot mode (SW1 should be set to SD)
+For PYNQ-Z2: Make sure SD card with PYNQ image is inserted
+
+=== End Output ===
+

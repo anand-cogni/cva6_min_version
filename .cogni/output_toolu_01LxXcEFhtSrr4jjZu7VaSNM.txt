@@ -1,0 +1,7 @@
+=== Command: cd /home/smita/cva6_min_version && make simulate (2026-03-06T06:02:17.659Z) ===
+Exit Code: 2
+Output:
+make: *** No rule to make target 'simulate'.  Stop.
+
+=== End Output ===
+

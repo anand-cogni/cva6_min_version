@@ -1,0 +1,6 @@
+=== Command: chmod +x demo_uart_boot.sh extract_uart.py (2026-03-06T06:20:54.535Z) ===
+Exit Code: 0
+Output:
+
+=== End Output ===
+

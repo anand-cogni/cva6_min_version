@@ -1,0 +1,84 @@
+=== Command: ./demo_uart_boot.sh (2026-03-06T06:21:37.783Z) ===
+Exit Code: 0
+Output:
+================================================================================
+CVA6 RISC-V Processor - Boot & UART Demonstration
+================================================================================
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📡 PART 1: UART OUTPUT VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Processor writes to UART address (0x21000000):
+
+Raw UART Writes (first 20 characters):
+  0x43 (decimal 67) → 'C'
+  0x56 (decimal 86) → 'V'
+  0x41 (decimal 65) → 'A'
+  0x36 (decimal 54) → '6'
+  0x20 (decimal 32) → ' '
+  0x42 (decimal 66) → 'B'
+  0x6f (decimal 111) → 'o'
+  0x6f (decimal 111) → 'o'
+  0x74 (decimal 116) → 't'
+  0x69 (decimal 105) → 'i'
+  0x6e (decimal 110) → 'n'
+  0x67 (decimal 103) → 'g'
+  0x2e (decimal 46) → '.'
+  0x2e (decimal 46) → '.'
+  0x2e (decimal 46) → '.'
+  0xa (decimal 10) → ''
+  0x4c (decimal 76) → 'L'
+  0x45 (decimal 69) → 'E'
+  0x44 (decimal 68) → 'D'
+  0x20 (decimal 32) → ' '
+
+📝 Decoded UART Message:
+┌────────────────────────────────────────┐
+│  CVA6 Booting...                       │
+│  LED ON                                │
+│  LED OFF                               │
+│  (repeating...)                        │
+└────────────────────────────────────────┘
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 PART 2: BOOT SEQUENCE VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Boot Metrics:
+Instructions Executed: 20833
+LED Toggle Events: 1
+Final PC: 0xd4
+
+Boot Progression:
+  ✅ Step 1: Reset released
+  ✅ Step 2: Bootrom code loaded from address 0x00000000
+  ✅ Step 3: UART initialized (writes to 0x21000000)
+  ✅ Step 4: Boot message transmitted ('CVA6 Booting...')
+  ✅ Step 5: LED control activated (toggle detected)
+  ✅ Step 6: Main loop entered (PC advanced to 0xd4)
+  ✅ Step 7: Continuous operation (20,833+ instructions)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ PART 3: FINAL TEST RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PHASE 1: CVA6 BASIC TEST PASSED
+========================================================================
+
+========================================================================
+
+✅ ALL TESTS PASSED
+  - CVA6 Basic Test: PASS
+  - HBM3 Memory Test: PASS (10/10 tests)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 DEMONSTRATION COMPLETE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Evidence Location: sim/eda.work/bench_cva6_hbm3.sim/sim.log
+Report Generated: Fri Mar  6 11:51:37 AM IST 2026
+
+
+=== End Output ===
+

@@ -1,0 +1,41 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Mar  6 12:27:16 2026
+# Process ID         : 17356
+# Current directory  : /home/smita/cva6_min_version/fpga
+# Command line       : vivado -mode batch -source create_vivado_project.tcl
+# Log file           : /home/smita/cva6_min_version/fpga/vivado.log
+# Journal file       : /home/smita/cva6_min_version/fpga/vivado.jou
+# Running On         : smita-HP-250-G8-Notebook-PC
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 24.04.4 LTS
+# Processor Detail   : 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+# CPU Frequency      : 3570.732 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 16495 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 20790 MB
+# Available Virtual  : 14535 MB
+#-----------------------------------------------------------
+source create_vivado_project.tcl
+# puts "========================================================================"
+========================================================================
+# puts "Creating Vivado Project: CVA6 + HBM3 for PYNQ-Z2"
+Creating Vivado Project: CVA6 + HBM3 for PYNQ-Z2
+# puts "========================================================================"
+========================================================================
+# set project_name "cva6_fpga"
+# set project_dir "./vivado_project"
+# puts "\n[1/6] Creating project..."
+
+[1/6] Creating project...
+# create_project ${project_name} ${project_dir} -part xc7z020clg400-1 -force
+# puts "[2/6] Setting board to PYNQ-Z2..."
+[2/6] Setting board to PYNQ-Z2...
+# set_property board_part tul.com.tw:pynq-z2:part0:1.0 [current_project]
+ERROR: [Board 49-71] The board_part definition was not found for tul.com.tw:pynq-z2:part0:1.0. The project's board_part property was not set, but the project's part property was set to xc7z020clg400-1. Valid board_part values can be retrieved with the 'get_board_parts' Tcl command. Check if board.repoPaths parameter is set and the board_part is installed from the tcl app store.
+INFO: [Common 17-206] Exiting Vivado at Fri Mar  6 12:27:21 2026...

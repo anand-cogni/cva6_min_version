@@ -1,0 +1,8 @@
+=== Command: which iverilog verilator vcs xrun vsim 2>/dev/null | head -5 (2026-03-05T06:30:35.787Z) ===
+Exit Code: 0
+Output:
+/usr/bin/iverilog
+/usr/bin/verilator
+
+=== End Output ===
+

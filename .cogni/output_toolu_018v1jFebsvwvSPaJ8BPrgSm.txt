@@ -1,0 +1,8 @@
+=== Command: screen -list (2026-03-06T07:33:33.124Z) ===
+Exit Code: 1
+Output:
+No Sockets found in /run/screen/S-smita.
+
+
+=== End Output ===
+

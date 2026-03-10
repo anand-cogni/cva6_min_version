@@ -1,0 +1,9 @@
+=== Command: head -200 sim/eda.work/bench_cva6_hbm3.sim/sim.log | grep -E "UART|Booting|TEST START|Starting RISC" (2026-03-06T06:04:03.106Z) ===
+Exit Code: 0
+Output:
+TEST START
+[UART] LOG: 12000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x0)
+Starting RISC-V Processor Execution...
+
+=== End Output ===
+

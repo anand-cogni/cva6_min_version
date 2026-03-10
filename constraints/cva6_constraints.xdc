@@ -33,6 +33,15 @@ set_property -dict {PACKAGE_PIN N16 IOSTANDARD LVCMOS33} [get_ports {led[2]}]
 set_property -dict {PACKAGE_PIN M14 IOSTANDARD LVCMOS33} [get_ports {led[3]}]
 
 ## ============================================================================
+## UART TX - Debug Output
+## ============================================================================
+## Using PMOD connector JA (Pin 1) for UART TX - connects to external USB-Serial adapter
+## For onboard USB-UART (recommended): Use pin Y18 (PMOD JA1)
+## Note: PYNQ-Z2's onboard FTDI UART typically connects to PS, not PL
+##       So we use PMOD for PL-based UART output
+set_property -dict {PACKAGE_PIN Y18 IOSTANDARD LVCMOS33} [get_ports uart_tx]
+
+## ============================================================================
 ## Timing Constraints
 ## ============================================================================
 ## Set input delay for reset button (asynchronous, so set to 0)
@@ -54,10 +63,31 @@ set_property BITSTREAM.CONFIG.CONFIGRATE 50 [current_design]
 set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
 
 ## ============================================================================
+## HBM3 PHY Signals - Unconnected (No real HBM3 on PYNQ-Z2)
+## ============================================================================
+## Mark HBM3 PHY signals as unconnected - synthesis will optimize them away
+## These signals are part of the design but won't be routed to physical pins
+
+## Mark all HBM3 ports as unconnected
+set_property DONT_TOUCH false [get_ports phy_to_dram_*]
+
+## Disable timing analysis on HBM3 signals (they're unconnected)
+set_false_path -to [get_ports phy_to_dram_*]
+
+## ============================================================================
 ## Additional Constraints (Optional)
 ## ============================================================================
 ## Disable timing on LED outputs (they're not timing critical)
 set_false_path -to [get_ports {led[*]}]
 
+## Disable timing on UART TX (non-critical)
+set_false_path -to [get_ports uart_tx]
+
 ## Set maximum fanout for better timing closure
 set_max_fanout 20 [current_design]
+
+## ============================================================================
+## Synthesis Settings for CVA6 + HBM3
+## ============================================================================
+## Allow synthesis to optimize away unconnected HBM3 logic
+set_property KEEP_HIERARCHY soft [current_design]

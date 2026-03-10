@@ -1,0 +1,26 @@
+=== Command: head -20 sim/eda.work/eda.log (2026-03-06T06:03:15.278Z) ===
+Exit Code: 0
+Output:
+INFO: [EDA] Time: Fri Mar  6 11:30:12 2026 start - eda.work/eda.log
+INFO: [EDA] eda: version 0.3.25
+INFO: [EDA] main: [1m[33meda sim bench_cva6_hbm3[0m[32m; (run from /home/smita/cva6_min_version/sim)
+INFO: [EDA] python: version 3.12.3
+INFO: [EDA] eda from: /home/smita/.local/share/pipx/venvs/opencos-eda/lib/python3.12/site-packages/opencos/eda.py
+INFO: [EDA] eda_config: using config: /home/smita/.local/share/pipx/venvs/opencos-eda/lib/python3.12/site-packages/opencos/eda_config_defaults.yml
+INFO: [EDA] *** OpenCOS EDA ***
+INFO: [EDA] Auto tool setup for command: [1m[33msim
+INFO: [EDA] [1m[32m--Detected tool--   --Path--              --Version--  
+INFO: [EDA] [1m[32miverilog            [0m[36m(/usr/bin/iverilog)   12.0         
+INFO: [EDA] [1m[32mverilator           [0m[36m(/usr/bin/verilator)  5.020        
+INFO: [EDA] [1m[32m--Detected other--  --Path--              --Version--  
+INFO: [EDA] --tool not specified, using default for command='sim': [1m[32mverilator
+INFO: [EDA] sim: top-most target name: bench_cva6_hbm3 (./DEPS.yml::bench_cva6_hbm3::line=141)
+INFO: [EDA] Removing previous 'eda.work/bench_cva6_hbm3.sim'
+INFO: [EDA] ⏩ exec: /usr/bin/verilator --binary -Wno-CASEINCOMPLETE -Wno-REALCVT -Wno-SELRANGE -Wno-TIMESCALEMOD -Wno-UNSIGNED -Wno-WIDTH --timing --assert --autoflush -sv -CFLAGS -O1 -j 1 -top tb_cva6_minimal_top -o sim.exe +incdir+/home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src +incdir+/home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src +incdir+/home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src +define+SIMULATION=1 /home/smita/cva6_min_version/src/cva6_boot_rom.v /home/smita/cva6_min_version/src/cva6_data_ram.v /home/smita/cva6_min_version/src/cva6_min_core.v /home/smita/cva6_min_version/simple_uart_tx.v /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv /home/smita/cva6_min_version/cva6_minimal_top.v /home/smita/cva6_min_version/tb/tb_cva6_minimal_top.v (in eda.work/bench_cva6_hbm3.sim, tee_fpath='compile.log')
+INFO: [EDA] PID 15390 for /usr/bin/verilator
+make: Entering directory '/home/smita/cva6_min_version/sim/eda.work/bench_cva6_hbm3.sim/obj_dir'
+g++ -Os  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -O1 -DVL_TIME_CONTEXT   -fcoroutines -c -o verilated.o /usr/share/verilator/include/verilated.cpp
+g++ -Os  -I.  -MMD -I/usr/share/verilator/include -I/usr/share/verilator/include/vltstd -DVM_COVERAGE=0 -DVM_SC=0 -DVM_TRACE=0 -DVM_TRACE_FST=0 -DVM_TRACE_VCD=0 -faligned-new -fcf-protection=none -Wno-bool-operation -Wno-overloaded-virtual -Wno-shadow -Wno-sign-compare -Wno-uninitialized -Wno-unused-but-set-parameter -Wno-unused-but-set-variable -Wno-unused-parameter -Wno-unused-variable     -O1 -DVL_TIME_CONTEXT   -fcoroutines -c -o verilated_timing.o /usr/share/verilator/include/verilated_timing.cpp
+
+=== End Output ===
+

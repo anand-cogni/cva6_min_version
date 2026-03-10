@@ -1,0 +1,7 @@
+=== Command: lsof /dev/ttyUSB1 2>/dev/null || echo "No processes using /dev/ttyUSB1 or lsof needs elevated privileges" (2026-03-06T07:33:12.712Z) ===
+Exit Code: 0
+Output:
+No processes using /dev/ttyUSB1 or lsof needs elevated privileges
+
+=== End Output ===
+

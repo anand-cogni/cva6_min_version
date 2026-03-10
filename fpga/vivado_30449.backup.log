@@ -1,0 +1,111 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Mar  6 13:30:22 2026
+# Process ID         : 30449
+# Current directory  : /home/smita/cva6_min_version/fpga
+# Command line       : vivado -mode batch -source create_vivado_project.tcl
+# Log file           : /home/smita/cva6_min_version/fpga/vivado.log
+# Journal file       : /home/smita/cva6_min_version/fpga/vivado.jou
+# Running On         : smita-HP-250-G8-Notebook-PC
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 24.04.4 LTS
+# Processor Detail   : 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+# CPU Frequency      : 3800.000 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 16495 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 20790 MB
+# Available Virtual  : 13291 MB
+#-----------------------------------------------------------
+source create_vivado_project.tcl
+# puts "========================================================================"
+========================================================================
+# puts "Creating Vivado Project: CVA6 + HBM3 for PYNQ-Z2"
+Creating Vivado Project: CVA6 + HBM3 for PYNQ-Z2
+# puts "========================================================================"
+========================================================================
+# set project_name "cva6_fpga"
+# set project_dir "./vivado_project"
+# puts "\n[1/6] Creating project..."
+
+[1/6] Creating project...
+# create_project ${project_name} ${project_dir} -part xc7z020clg400-1 -force
+# puts "[2/6] Setting board to PYNQ-Z2..."
+[2/6] Setting board to PYNQ-Z2...
+# if {[catch {set_property board_part tul.com.tw:pynq-z2:part0:1.0 [current_project]} result]} {
+#     puts "  ⚠ PYNQ-Z2 board files not installed (this is OK)"
+#     puts "  ✓ Using FPGA part directly: xc7z020clg400-1"
+# } else {
+#     puts "  ✓ Board set successfully"
+# }
+  ⚠ PYNQ-Z2 board files not installed (this is OK)
+  ✓ Using FPGA part directly: xc7z020clg400-1
+# puts "[3/6] Adding CVA6 core files..."
+[3/6] Adding CVA6 core files...
+# add_files {
+#     ../src/cva6_boot_rom.v
+#     ../src/cva6_data_ram.v
+#     ../src/cva6_min_core.v
+#     ../src/cva6_minimal_top.v
+#     ../simple_uart_tx.v
+# }
+# puts "[4/6] Adding HBM3 controller files..."
+[4/6] Adding HBM3 controller files...
+# add_files {
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv
+#     ../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv
+# }
+# puts "[5/6] Adding constraint file..."
+[5/6] Adding constraint file...
+# add_files -fileset constrs_1 {
+#     ../constraints/cva6_constraints.xdc
+# }
+# puts "[6/6] Setting include directories..."
+[6/6] Setting include directories...
+# set_property include_dirs {
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src
+#     ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src
+#     ../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src
+# } [current_fileset]
+# set_property top cva6_minimal_top [current_fileset]
+# update_compile_order -fileset sources_1
+# set_property target_language Verilog [current_project]
+# set_property simulator_language Mixed [current_project]
+# puts "========================================================================"
+========================================================================
+# puts "✅ Project created successfully!"
+✅ Project created successfully!
+# puts "========================================================================"
+========================================================================
+# puts "Project name: ${project_name}"
+Project name: cva6_fpga
+# puts "Project location: ${project_dir}"
+Project location: ./vivado_project
+# puts "Top module: cva6_minimal_top"
+Top module: cva6_minimal_top
+# puts "Board: PYNQ-Z2 (xc7z020clg400-1)"
+Board: PYNQ-Z2 (xc7z020clg400-1)
+# puts "========================================================================"
+========================================================================
+# puts "\nNext steps:"
+
+Next steps:
+# puts "  1. Open project: vivado ${project_dir}/${project_name}.xpr &"
+  1. Open project: vivado ./vivado_project/cva6_fpga.xpr &
+# puts "  2. Run synthesis: Click 'Run Synthesis' in Vivado"
+  2. Run synthesis: Click 'Run Synthesis' in Vivado
+# puts "  3. Wait 10-30 minutes for synthesis to complete"
+  3. Wait 10-30 minutes for synthesis to complete
+# puts "========================================================================"
+========================================================================
+INFO: [Common 17-206] Exiting Vivado at Fri Mar  6 13:30:28 2026...

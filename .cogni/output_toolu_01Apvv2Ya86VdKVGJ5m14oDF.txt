@@ -1,0 +1,14 @@
+=== Command: ps aux | grep -i ttyusb (2026-03-06T07:33:43.430Z) ===
+Exit Code: 0
+Output:
+root       25718  0.0  0.0   9856  2700 ?        Ss   12:51   0:00 SCREEN /dev/ttyUSB1 115200
+root       26790  0.0  0.0   9856  2756 ?        Ss   12:59   0:00 SCREEN /dev/ttyUSB1 115200,cs8,-parenb,-cstopb,-hupcl
+root       26935  0.0  0.0  19652  7476 pts/7    S+   13:01   0:00 sudo screen /dev/ttyUSB1 115200
+root       26936  0.0  0.0  19652  2608 pts/8    Ss   13:01   0:00 sudo screen /dev/ttyUSB1 115200
+root       26937  0.0  0.0   9548  3240 pts/8    S+   13:01   0:00 screen /dev/ttyUSB1 115200
+root       26938  0.0  0.0   9856  2696 ?        Ss   13:01   0:00 SCREEN /dev/ttyUSB1 115200
+smita      27203  0.0  0.0   9948  3732 ?        S    13:03   0:00 bash -c ps aux | grep -i ttyusb
+smita      27205  0.0  0.0   9152  2392 ?        S    13:03   0:00 grep -i ttyusb
+
+=== End Output ===
+

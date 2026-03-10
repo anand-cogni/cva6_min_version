@@ -1,0 +1,7 @@
+=== Command: ls -l /dev/ttyUSB* (2026-03-06T07:32:58.559Z) ===
+Exit Code: 0
+Output:
+crw-rw-rw- 1 root dialout 188, 1 Mar  6 13:01 /dev/ttyUSB1
+
+=== End Output ===
+

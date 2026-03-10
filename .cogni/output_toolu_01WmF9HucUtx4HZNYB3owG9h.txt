@@ -1,0 +1,15 @@
+=== Command: cd sim && iverilog -g2012 -o sim_cva6_hbm3.vvp -f <(echo "-y ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src" && echo "-y ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src" && echo "-y ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src" && echo "-y ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src" && echo "-y ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src" && echo "-y ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src" && echo "-y ../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src" && echo "+incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src" && echo "../src/cva6_boot_rom.v" && echo "../src/cva6_data_ram.v" && echo "../src/cva6_min_core.v" && echo "../simple_uart_tx.v" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_rtl_defines.svh" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_rtl_defines.svh" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/cmdmgr_rtl_defines.svh" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_rtl_defines.h" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/cmdpr_rtl_defines.svh" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/dfi_rtl_defines.svh" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv" && echo "../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv" && echo "../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/phy_rtl_defines.h" && echo "../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv" && echo "../cva6_minimal_top.v" && echo "../tb/tb_cva6_minimal_top.v") (2026-03-05T06:33:53.935Z) ===
+Exit Code: 7
+Output:
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv:27: Include file apb_rtl_defines.svh not found
+../simple_uart_tx.v:102: error: Unable to bind wire/reg/memory `tx_line' in `simple_uart_tx'
+../simple_uart_tx.v:102: error: Unable to elaborate r-value: tx_line
+../simple_uart_tx.v:111: error: Could not find variable ``tx_line'' in ``simple_uart_tx''
+../simple_uart_tx.v:115: error: Could not find variable ``tx_line'' in ``simple_uart_tx''
+../simple_uart_tx.v:128: error: Could not find variable ``tx_line'' in ``simple_uart_tx''
+../simple_uart_tx.v:139: error: Could not find variable ``tx_line'' in ``simple_uart_tx''
+../simple_uart_tx.v:156: error: Could not find variable ``tx_line'' in ``simple_uart_tx''
+7 error(s) during elaboration.
+
+=== End Output ===
+

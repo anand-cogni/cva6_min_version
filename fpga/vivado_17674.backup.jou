@@ -1,0 +1,56 @@
+#-----------------------------------------------------------
+# Vivado v2025.2 (64-bit)
+# SW Build 6299465 on Fri Nov 14 12:34:56 MST 2025
+# IP Build 6300035 on Fri Nov 14 10:48:45 MST 2025
+# SharedData Build 6298862 on Thu Nov 13 04:50:51 MST 2025
+# Start of session at: Fri Mar  6 12:31:58 2026
+# Process ID         : 17674
+# Current directory  : /home/smita/cva6_min_version/fpga
+# Command line       : vivado vivado_project/cva6_fpga.xpr
+# Log file           : /home/smita/cva6_min_version/fpga/vivado.log
+# Journal file       : /home/smita/cva6_min_version/fpga/vivado.jou
+# Running On         : smita-HP-250-G8-Notebook-PC
+# Platform           : Ubuntu
+# Operating System   : Ubuntu 24.04.4 LTS
+# Processor Detail   : 11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+# CPU Frequency      : 1346.698 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 16495 MB
+# Swap memory        : 4294 MB
+# Total Virtual      : 20790 MB
+# Available Virtual  : 14500 MB
+#-----------------------------------------------------------
+start_gui
+open_project vivado_project/cva6_fpga.xpr
+update_compile_order -fileset sources_1
+launch_runs synth_1 -jobs 4
+wait_on_run synth_1
+launch_runs impl_1 -jobs 4
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 4
+wait_on_run impl_1
+open_hw_manager
+connect_hw_server -allow_non_jtag
+open_hw_target
+set_property PROGRAM.FILE {/home/smita/cva6_min_version/fpga/vivado_project/cva6_fpga.runs/impl_1/cva6_minimal_top.bit} [get_hw_devices xc7z020_1]
+current_hw_device [get_hw_devices xc7z020_1]
+refresh_hw_device -update_hw_probes false [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/smita/cva6_min_version/fpga/vivado_project/cva6_fpga.runs/impl_1/cva6_minimal_top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/smita/cva6_min_version/fpga/vivado_project/cva6_fpga.runs/impl_1/cva6_minimal_top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+update_compile_order -fileset sources_1
+set_property PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property FULL_PROBES.FILE {} [get_hw_devices xc7z020_1]
+set_property PROGRAM.FILE {/home/smita/cva6_min_version/fpga/vivado_project/cva6_fpga.runs/impl_1/cva6_minimal_top.bit} [get_hw_devices xc7z020_1]
+program_hw_devices [get_hw_devices xc7z020_1]
+refresh_hw_device [lindex [get_hw_devices xc7z020_1] 0]
+update_compile_order -fileset sources_1
+update_compile_order -fileset sources_1

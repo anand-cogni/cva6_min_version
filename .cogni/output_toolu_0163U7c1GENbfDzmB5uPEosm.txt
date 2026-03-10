@@ -1,0 +1,8 @@
+=== Command: sudo lsof /dev/ttyUSB1 (2026-03-06T07:33:05.758Z) ===
+Exit Code: 1
+Output:
+sudo: a terminal is required to read the password; either use the -S option to read from standard input or configure an askpass helper
+sudo: a password is required
+
+=== End Output ===
+

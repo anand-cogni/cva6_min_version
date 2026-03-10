@@ -1,0 +1,7 @@
+=== Command: head -20 /home/smita/cva6_min_version/sim/eda.log (2026-03-06T06:03:07.101Z) ===
+Exit Code: 1
+Output:
+head: cannot open '/home/smita/cva6_min_version/sim/eda.log' for reading: No such file or directory
+
+=== End Output ===
+

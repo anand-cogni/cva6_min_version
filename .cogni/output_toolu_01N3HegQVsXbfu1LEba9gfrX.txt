@@ -1,0 +1,7 @@
+=== Command: cd fpga && vivado -mode batch -source create_vivado_project.tcl (2026-03-06T06:58:20.189Z) ===
+Exit Code: 127
+Output:
+bash: line 1: vivado: command not found
+
+=== End Output ===
+

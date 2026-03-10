@@ -1,0 +1,7 @@
+=== Command: cd sim && ls -la DEPS.yml (2026-03-06T05:59:46.082Z) ===
+Exit Code: 0
+Output:
+-rw-rw-r-- 1 smita smita 6294 Mar  5 12:13 DEPS.yml
+
+=== End Output ===
+

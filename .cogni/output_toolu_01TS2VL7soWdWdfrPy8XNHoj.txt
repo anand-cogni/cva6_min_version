@@ -1,0 +1,11 @@
+=== Command: cd /home/smita/cva6_min_version/sim && ls -la eda.work/ (2026-03-06T06:02:54.225Z) ===
+Exit Code: 0
+Output:
+total 1948
+drwxrwxr-x 3 smita smita    4096 Mar  6 11:30 .
+drwxrwxr-x 3 smita smita    4096 Mar  6 11:29 ..
+drwxrwxr-x 4 smita smita    4096 Mar  6 11:30 bench_cva6_hbm3.sim
+-rw-rw-r-- 1 smita smita 1982185 Mar  6 11:30 eda.log
+
+=== End Output ===
+

@@ -1,0 +1,12 @@
+=== Command: grep -n "\[UART\]" sim/eda.work/bench_cva6_hbm3.sim/sim.log | head -50 (2026-03-06T06:03:52.804Z) ===
+Exit Code: 0
+Output:
+10:[UART] LOG: 12000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x0)
+3932:[UART] LOG: 87084000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[10] : expected_value: updated actual_value: x10 = 0xbec24a (was 0xbec24b)
+7550:[UART] LOG: 173916000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[10] : expected_value: updated actual_value: x10 = 0xbebb39 (was 0xbebb3a)
+11166:[UART] LOG: 260700000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[10] : expected_value: updated actual_value: x10 = 0xbeb429 (was 0xbeb42a)
+14784:[UART] LOG: 347532000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[10] : expected_value: updated actual_value: x10 = 0xbead18 (was 0xbead19)
+18400:[UART] LOG: 434316000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[10] : expected_value: updated actual_value: x10 = 0xbea608 (was 0xbea609)
+
+=== End Output ===
+

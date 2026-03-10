@@ -1,0 +1,70 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2025 Advanced Micro Devices, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2025.2 (lin64) Build 6299465 Fri Nov 14 12:34:56 MST 2025
+| Date         : Fri Mar  6 13:33:22 2026
+| Host         : smita-HP-250-G8-Notebook-PC running 64-bit Ubuntu 24.04.4 LTS
+| Command      : report_methodology -file cva6_minimal_top_methodology_drc_routed.rpt -pb cva6_minimal_top_methodology_drc_routed.pb -rpx cva6_minimal_top_methodology_drc_routed.rpx
+| Design       : cva6_minimal_top
+| Device       : xc7z020clg400-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max checks: <unlimited>
+             Checks found: 5
++--------+----------+------------------------------------------+--------+
+| Rule   | Severity | Description                              | Checks |
++--------+----------+------------------------------------------+--------+
+| XDCH-2 | Warning  | Same min and max delay values on IO port | 5      |
++--------+----------+------------------------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+XDCH-2#1 Warning
+Same min and max delay values on IO port  
+The same input delay of 0.000 ns has been defined on port 'sys_reset_n' relative to clock sys_clock_pin for both max and min. Make sure this reflects the design intent.
+set_input_delay -clock [get_clocks sys_clock_pin] 0.000 [get_ports sys_reset_n]
+/home/smita/cva6_min_version/constraints/cva6_constraints.xdc (Line: 48)
+Related violations: <none>
+
+XDCH-2#2 Warning
+Same min and max delay values on IO port  
+The same output delay of 0.000 ns has been defined on port 'led[0]' relative to clock sys_clock_pin for both max and min. Make sure this reflects the design intent.
+set_output_delay -clock [get_clocks sys_clock_pin] 0.000 [get_ports {led[*]}]
+/home/smita/cva6_min_version/constraints/cva6_constraints.xdc (Line: 51)
+Related violations: <none>
+
+XDCH-2#3 Warning
+Same min and max delay values on IO port  
+The same output delay of 0.000 ns has been defined on port 'led[1]' relative to clock sys_clock_pin for both max and min. Make sure this reflects the design intent.
+set_output_delay -clock [get_clocks sys_clock_pin] 0.000 [get_ports {led[*]}]
+/home/smita/cva6_min_version/constraints/cva6_constraints.xdc (Line: 51)
+Related violations: <none>
+
+XDCH-2#4 Warning
+Same min and max delay values on IO port  
+The same output delay of 0.000 ns has been defined on port 'led[2]' relative to clock sys_clock_pin for both max and min. Make sure this reflects the design intent.
+set_output_delay -clock [get_clocks sys_clock_pin] 0.000 [get_ports {led[*]}]
+/home/smita/cva6_min_version/constraints/cva6_constraints.xdc (Line: 51)
+Related violations: <none>
+
+XDCH-2#5 Warning
+Same min and max delay values on IO port  
+The same output delay of 0.000 ns has been defined on port 'led[3]' relative to clock sys_clock_pin for both max and min. Make sure this reflects the design intent.
+set_output_delay -clock [get_clocks sys_clock_pin] 0.000 [get_ports {led[*]}]
+/home/smita/cva6_min_version/constraints/cva6_constraints.xdc (Line: 51)
+Related violations: <none>
+
+

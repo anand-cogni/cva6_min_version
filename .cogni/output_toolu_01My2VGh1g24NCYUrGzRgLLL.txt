@@ -1,0 +1,7 @@
+=== Command: ls -l /dev/ttyUSB0 2>/dev/null || echo "ttyUSB0 not found" (2026-03-06T07:38:10.899Z) ===
+Exit Code: 0
+Output:
+ttyUSB0 not found
+
+=== End Output ===
+

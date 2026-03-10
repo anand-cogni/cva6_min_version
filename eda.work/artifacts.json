@@ -1,0 +1,8 @@
+{
+    "eda.log": {
+        "name": "eda.work/eda.log",
+        "type": "text",
+        "size": 1129,
+        "description": "EDA stdout logfile"
+    }
+}

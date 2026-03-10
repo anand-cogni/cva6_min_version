@@ -1,0 +1,7 @@
+=== Command: cd sim && make compile 2>&1 | tail -30 (2026-03-06T09:37:41.729Z) ===
+Exit Code: 0
+Output:
+make: *** No rule to make target 'compile'.  Stop.
+
+=== End Output ===
+
