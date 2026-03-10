@@ -1,0 +1,21 @@
+=== Command: sed -n '21148,21162p' sim/eda.work/bench_cva6_hbm3.sim/sim.log (2026-03-06T17:46:35.163Z) ===
+Exit Code: 0
+Output:
+========================================================================
+Simulation Complete - Analyzing Results
+========================================================================
+Total Clock Cycles: 62521
+Instructions Executed: 20833
+LED Toggle Events: 1
+Final LED State: 0101
+Final PC: 0xd4
+========================================================================
+PASS: LED toggled 1 times - processor wrote to LED register
+PASS: Program Counter advanced to 0xd4 - processor is executing
+PASS: Executed 20833 instructions - processor running normally
+========================================================================
+PHASE 1: CVA6 BASIC TEST PASSED
+========================================================================
+
+=== End Output ===
+

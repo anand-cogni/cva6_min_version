@@ -1,0 +1,9 @@
+=== Command: grep -n "PHASE 1\|Instructions Executed\|CVA6 BASIC TEST PASSED\|Simulation Complete" sim/eda.work/bench_cva6_hbm3.sim/sim.log | head -20 (2026-03-06T17:46:21.324Z) ===
+Exit Code: 0
+Output:
+21149:Simulation Complete - Analyzing Results
+21152:Instructions Executed: 20833
+21161:PHASE 1: CVA6 BASIC TEST PASSED
+
+=== End Output ===
+

@@ -1,0 +1,47 @@
+=== Command: sed -n '10,50p' sim/eda.work/bench_cva6_hbm3.sim/sim.log (2026-03-06T17:47:04.257Z) ===
+Exit Code: 0
+Output:
+[UART] LOG: 12000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x0)
+LOG: 12000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.instr_type : expected_value: LUI actual_value: LUI (rd=x2, imm=0x10001000)
+LOG: 20000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: EXECUTE actual_value: EXECUTE
+LOG: 20000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.alu_result : expected_value: 0x10001000 actual_value: Writing x2 = 0x10001000
+LOG: 28000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[2] : expected_value: updated actual_value: x2 = 0x10001000 (was 0x0)
+>>> REGISTER UPDATE: x2 = 0x10001000
+LOG: 28000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: FETCH actual_value: FETCH (PC=0x4)
+LOG: 84000 : INFO : tb_cva6_minimal_top : sys_reset_n : expected_value: 0 actual_value: 0
+========================================================================
+Starting RISC-V Processor Execution...
+========================================================================
+LOG: 108000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[2] : expected_value: updated actual_value: x2 = 0x0 (was 0x10001000)
+>>> REGISTER UPDATE: x2 = 0x00000000
+LOG: 116000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x10001137)
+LOG: 116000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.instr_type : expected_value: LUI actual_value: LUI (rd=x2, imm=0x10001000)
+LOG: 124000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: EXECUTE actual_value: EXECUTE
+LOG: 124000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.alu_result : expected_value: 0x10001000 actual_value: Writing x2 = 0x10001000
+LOG: 132000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[2] : expected_value: updated actual_value: x2 = 0x10001000 (was 0x0)
+>>> REGISTER UPDATE: x2 = 0x10001000
+LOG: 132000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: FETCH actual_value: FETCH (PC=0x4)
+LOG: 140000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x10001137)
+LOG: 140000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.instr_type : expected_value: LUI actual_value: LUI (rd=x5, imm=0x21000000)
+LOG: 148000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: EXECUTE actual_value: EXECUTE
+LOG: 148000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.alu_result : expected_value: 0x21000000 actual_value: Writing x5 = 0x21000000
+LOG: 156000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[5] : expected_value: updated actual_value: x5 = 0x21000000 (was 0x0)
+>>> REGISTER UPDATE: x5 = 0x21000000
+LOG: 156000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: FETCH actual_value: FETCH (PC=0x8)
+LOG: 164000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x210002b7)
+LOG: 164000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.instr_type : expected_value: LUI actual_value: LUI (rd=x6, imm=0x20000000)
+LOG: 172000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: EXECUTE actual_value: EXECUTE
+LOG: 172000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.alu_result : expected_value: 0x20000000 actual_value: Writing x6 = 0x20000000
+LOG: 180000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[6] : expected_value: updated actual_value: x6 = 0x20000000 (was 0x0)
+>>> REGISTER UPDATE: x6 = 0x20000000
+LOG: 180000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: FETCH actual_value: FETCH (PC=0xc)
+LOG: 188000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: DECODE actual_value: DECODE (Instr=0x20000337)
+LOG: 188000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.instr_type : expected_value: ADDI actual_value: ADDI (rd=x7, rs1=x0, imm=67)
+LOG: 196000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: EXECUTE actual_value: EXECUTE
+LOG: 196000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.alu_result : expected_value: computed actual_value: x7 = x0(0x0) + 67 = 0x43
+LOG: 204000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.regs[7] : expected_value: updated actual_value: x7 = 0x43 (was 0x0)
+>>> REGISTER UPDATE: x7 = 0x00000043
+LOG: 204000 : INFO : tb_cva6_minimal_top : dut.u_riscv_core.state : expected_value: FETCH actual_value: FETCH (PC=0x10)
+
+=== End Output ===
+

@@ -1,0 +1,11 @@
+=== Command: grep -n ">>> REGISTER UPDATE" sim/eda.work/bench_cva6_hbm3.sim/sim.log | head -5 (2026-03-06T17:46:51.702Z) ===
+Exit Code: 0
+Output:
+15:>>> REGISTER UPDATE: x2 = 0x10001000
+22:>>> REGISTER UPDATE: x2 = 0x00000000
+28:>>> REGISTER UPDATE: x2 = 0x10001000
+35:>>> REGISTER UPDATE: x5 = 0x21000000
+42:>>> REGISTER UPDATE: x6 = 0x20000000
+
+=== End Output ===
+
