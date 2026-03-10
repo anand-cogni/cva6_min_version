@@ -1,0 +1,223 @@
+49       
+0 apb_rtl_defines.svh
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/apb_rtl_defines.svh
+0 ../src/apb_rtl_defines.svh
+0 ../tb/apb_rtl_defines.svh
+0 axi_rtl_defines.svh
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/axi_rtl_defines.svh
+0 ../src/axi_rtl_defines.svh
+0 ../tb/axi_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/axi_rtl_defines.svh
+0 cmdmgr_rtl_defines.svh
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/cmdmgr_rtl_defines.svh
+0 ../src/cmdmgr_rtl_defines.svh
+0 ../tb/cmdmgr_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/cmdmgr_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/cmdmgr_rtl_defines.svh
+0 cmdpr_rtl_defines.svh
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/cmdpr_rtl_defines.svh
+0 ../src/cmdpr_rtl_defines.svh
+0 ../tb/cmdpr_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/cmdpr_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/cmdpr_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/cmdpr_rtl_defines.svh
+0 refresh_rtl_defines.h
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/refresh_rtl_defines.h
+0 ../src/refresh_rtl_defines.h
+0 ../tb/refresh_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/refresh_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/refresh_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/refresh_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/refresh_rtl_defines.h
+0 dfi_rtl_defines.svh
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/dfi_rtl_defines.svh
+0 ../src/dfi_rtl_defines.svh
+0 ../tb/dfi_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/dfi_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/dfi_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/dfi_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/dfi_rtl_defines.svh
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/dfi_rtl_defines.svh
+0 phy_rtl_defines.h
+0 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/etc/systemverilog/phy_rtl_defines.h
+0 ../src/phy_rtl_defines.h
+0 ../tb/phy_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/phy_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/phy_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/phy_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/phy_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/phy_rtl_defines.h
+0 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/phy_rtl_defines.h
+61
++incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src
++incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src
++incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src
++incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src
++incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src
++incdir+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src
++incdir+../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src
++incdir+../src
++incdir+../tb
++itf+/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/vcsdp_lite.tab
++vcsd1
++vpi
+-Mamsrun=
+-Masflags=
+-Mcc=gcc
+-Mcfl= -pipe -fPIC -O -I/tools/eda/synopsys/vcs/W-2024.09-SP2-7/include
+-Mcplusplus=g++
+-Mcrt0=
+-Mcrtn=
+-Mcsrc=
+-Mexternalobj=
+-Mldflags= -rdynamic
+-Mobjects= /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/libvirsim.so /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/liberrorinf.so /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/libsnpsmalloc.so /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/libvfs.so
+-Mout=simv
+-Msaverestoreobj=/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/vcs_save_restore_new.o
+-Msyslibs=/tools/eda/synopsys/verdi/W-2024.09-SP2-7/share/PLI/VCS/LINUX64/pli.a -ldl
+-Mvcsaceobjs=
+-Mxcflags= -pipe -fPIC -I/tools/eda/synopsys/vcs/W-2024.09-SP2-7/include
+-Mxllcflags=
+-P
+-Xfile_begin_f=filelist.f
+-Xfile_end
+-Xufe=2steps
+-debug_access+all
+-fsdb
+-full64
+-gen_obj
+-kdb
+-l
+-picarchive
+-sverilog
+-timescale=1ns/1ps
+-top
+/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/bin/vcs1
+compile.log
+tb_cva6_minimal_top
+/tools/eda/synopsys/verdi/W-2024.09-SP2-7/share/PLI/VCS/LINUX64/verdi.tab
+../src/cva6_boot_rom.v
+../src/cva6_data_ram.v
+../src/cva6_min_core.v
+../src/cva6_minimal_top.v
+../src/simple_uart_tx.v
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv
+../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv
+../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv
+../tb/tb_cva6_minimal_top.v
+76
+which_declare=declare -f
+__MODULES_SHARE_MANPATH=:1
+__MODULES_LMINIT=module use --append /usr/share/Modules/modulefiles:module use --append /etc/modulefiles:module use --append /usr/share/modulefiles
+XRDP_SOCKET_PATH=/run/xrdp/20014
+XRDP_SESSION=1501493
+XRDP_PULSE_SOURCE_SOCKET=xrdp_chansrv_audio_in_socket_16
+XRDP_PULSE_SINK_SOCKET=xrdp_chansrv_audio_out_socket_16
+XDG_SESSION_TYPE=x11
+XDG_SESSION_ID=c59
+XDG_SESSION_CLASS=user
+XDG_RUNTIME_DIR=/run/user/20014
+XDG_MENU_PREFIX=xfce-
+XDG_DATA_DIRS=/home/smita.s/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
+XDG_CURRENT_DESKTOP=XFCE
+XDG_CONFIG_DIRS=/etc/xdg
+VTE_VERSION=6402
+VMR_MODE_FLAG=64
+VERDI_HOME=/tools/eda/synopsys/verdi/W-2024.09-SP2-7
+VENDOR=unknown
+VCS_TARGET_ARCH=linux64
+VCS_PYTHON3=/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/bin/Python3/bin/python3
+VCS_PATHMAP_PRELOAD_DONE=1
+VCS_MX_HOME_INTERNAL=1
+VCS_MODE_FLAG=64
+VCS_LOG_FILE=compile.log
+VCS_INTERNAL_CONVERTEDLIBS=
+VCS_HOME=/tools/eda/synopsys/vcs/W-2024.09-SP2-7
+VCS_EXEC_DONE=1
+VCS_DEPTH=0
+VCS_ARG_ADDED_FOR_TMP=1
+VCS_ARCH=linux64
+UNAME=/bin/uname
+TOOL_HOME=/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64
+SYNOPSYS_HOME=/tools/eda/synopsys
+SSH_AUTH_SOCK=/tmp/ssh-XXXXXXES6FCm/agent.1501775
+SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
+SSH_AGENT_PID=1501776
+SNPS_VERDI_INTERNAL_LP_XML_NEW_FLOW=1
+SNPS_VCS_VHDL_WRAPPER_KDB=1
+SNPS_VCS_PYTHON3=/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/bin/Python3/bin/python3
+SNPS_VCS_CLANG_PATH=/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/clang
+SNPS_INTERNAL_VCS_LINUX_OS=linux
+SESSION_MANAGER=local/unix:@/tmp/.ICE-unix/1501777,unix/unix:/tmp/.ICE-unix/1501777
+SCRNAME=vcs
+SCRIPT_NAME=vcs
+SCL_HOME=/tools/eda/synopsys/scl/2025.03-SP2
+PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+PANEL_GDK_CORE_DEVICE_EVENTS=0
+OVA_UUM=0
+OSTYPE=linux
+NOVAS_HOME=/tools/eda/synopsys/verdi/W-2024.09-SP2-7
+MODULES_RUN_QUARANTINE=LD_LIBRARY_PATH LD_PRELOAD
+MODULES_CMD=/usr/share/Modules/libexec/modulecmd.tcl
+MODULESHOME=/usr/share/Modules
+MODULEPATH=/etc/scl/modulefiles:/etc/scl/modulefiles:/etc/scl/modulefiles:/etc/scl/modulefiles:/usr/share/Modules/modulefiles:/etc/modulefiles:/usr/share/modulefiles
+MFLAGS=
+MAKE_TERMOUT=/dev/pts/6
+MAKE_TERMERR=/dev/pts/6
+MAKELEVEL=1
+MAKEFLAGS=
+LOADEDMODULES=
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+LC_ALL=C
+KRB5CCNAME=KCM:
+HOSTTYPE=x86_64-linux
+HISTCONTROL=ignoredups
+GROUP=smita.s
+DESKTOP_SESSION=xfce
+DEBUGINFOD_IMA_CERT_PATH=/etc/keys/ima:
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/20014/bus
+COLORTERM=truecolor
+BASH_FUNC_which%%=() {  ( alias;_ eval ${which_declare} ) | /usr/bin/which --tty-only --read-alias --read-functions --show-tilde --show-dot $@_}
+BASH_FUNC_module%%=() {  local _mlredir=0;_ if [ -n "${MODULES_REDIRECT_OUTPUT+x}" ]; then_ if [ "$MODULES_REDIRECT_OUTPUT" = '0' ]; then_ _mlredir=0;_ else_ if [ "$MODULES_REDIRECT_OUTPUT" = '1' ]; then_ _mlredir=1;_ fi;_ fi;_ fi;_ case " $@ " in _ *' --no-redirect '*)_ _mlredir=0_ ;;_ *' --redirect '*)_ _mlredir=1_ ;;_ esac;_ if [ $_mlredir -eq 0 ]; then_ _module_raw "$@";_ else_ _module_raw "$@" 2>&1;_ fi_}
+BASH_FUNC_ml%%=() {  module ml "$@"_}
+BASH_FUNC__module_raw%%=() {  eval "$(/usr/bin/tclsh '/usr/share/Modules/libexec/modulecmd.tcl' bash "$@")";_ _mlstatus=$?;_ return $_mlstatus_}
+ARCH=linux64
+0
+0
+24
+1772791048 ../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/phy_rtl_defines.h
+1772791044 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/dfi_rtl_defines.svh
+1772791041 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_rtl_defines.h
+1772791045 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/cmdpr_rtl_defines.svh
+1772791042 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/cmdmgr_rtl_defines.svh
+1772791043 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_rtl_defines.svh
+1772791046 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_rtl_defines.svh
+1772791836 ../tb/tb_cva6_minimal_top.v
+1772791047 ../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv
+1772791048 ../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv
+1772791044 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv
+1772791041 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv
+1772791045 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv
+1772791042 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv
+1772791043 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv
+1772791045 ../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv
+1772790999 ../src/simple_uart_tx.v
+1772790999 ../src/cva6_minimal_top.v
+1772790999 ../src/cva6_min_core.v
+1772790999 ../src/cva6_data_ram.v
+1772790999 ../src/cva6_boot_rom.v
+1772791104 filelist.f
+1765342961 /tools/eda/synopsys/verdi/W-2024.09-SP2-7/share/PLI/VCS/LINUX64/verdi.tab
+1765598819 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/vcsdp_lite.tab
+4
+1765601862 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/libvirsim.so
+1765599610 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/liberrorinf.so
+1765599605 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/libsnpsmalloc.so
+1765599595 /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/libvfs.so
+1772791851 simv.daidir
+-1 partitionlib

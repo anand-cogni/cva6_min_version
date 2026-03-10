@@ -1,0 +1,1 @@
+ERROR: [eda] (sim) Didn't get all passing patterns in log eda.work/bench_cva6_hbm3.sim/sim.log(STDOUT): ['R e p o r t: Verilator'],  {'R e p o r t: Verilator': None}

@@ -1,0 +1,824 @@
+command_name: sim
+config:
+  DEFAULT_HANDLERS:
+    build: opencos.commands.CommandBuild
+    elab: opencos.commands.CommandElab
+    sim: opencos.commands.CommandSim
+    lint: opencos.commands.CommandLint
+    synth: opencos.commands.CommandSynth
+    pnr: opencos.commands.CommandPnr
+    proj: opencos.commands.CommandProj
+    open: opencos.commands.CommandOpen
+    lec: opencos.commands.CommandLec
+    coverage: opencos.commands.CommandCoverage
+    flist: opencos.commands.CommandFList
+    multi: opencos.commands.CommandMulti
+    sweep: opencos.commands.CommandSweep
+    tools-multi: opencos.commands.CommandToolsMulti
+    export: opencos.commands.CommandExport
+    shell: opencos.commands.CommandShell
+    targets: opencos.commands.CommandTargets
+    upload: opencos.commands.CommandUpload
+    waves: opencos.commands.CommandWaves
+    deps-help: opencos.commands.CommandDepsHelp
+  DEFAULT_HANDLERS_HELP:
+    build: Build for a board, creating a project and running build flow.
+    coverage: Merge or report coverage databases from multiple test runs (tool dependent)
+    elab: Elaborates a DEPS target (lint + elab, tool specific).
+    export: Export files related to a target, tool independent.
+    flist: Create dependency from a DEPS target.
+    lec: Run equivalence on two designs.
+    lint: Syntax check, lint a DEPS target
+    multi: Run multiple DEPS targets, serially or in parallel.
+    open: Opens a project.
+    pnr: Place and Route, if supported for --tool. Some tools fold this into "synth".
+    proj: Create a project from a DEPS target for GUI sim/waves/debug.
+    shell: Runs only commands for DEPS target (like sim or elab, but stops prior to
+      tool).
+    sim: Simulates a DEPS target.
+    synth: Synthesizes a DEPS target.
+    sweep: Sweep one or more arguments across a range, serially or in parallel.
+    targets: List all possible targets given glob path.
+    tools-multi: Same as 'multi' but run on all available tools, or specfied using
+      --tools.
+    upload: Uploads a finished design into hardware.
+    waves: Opens waveform from prior simulation.
+    deps-help: Provide help about DEPS markup files, or schema using --verbose or
+      --help.
+    help: This help (without args), or i.e. "eda sim --help [--tool=TOOL]" for specific
+      help.
+  defines: {}
+  dep_command_enables:
+    shell: true
+    work_dir_add_srcs: true
+    peakrdl: true
+    var_subst_args: true
+    var_subst_os_env: true
+    tee: true
+  dep_tags_enables:
+    with-tools: true
+    with-args: true
+    with-commands: true
+    args: true
+    replace-config-tools: true
+    additive-config-tools: true
+  deps_markup_supported: true
+  deps_subprocess_shell: true
+  bare_plusarg_supported: true
+  deps_expandvars_enable: true
+  show_tool_versions: true
+  dep_sub: []
+  vars: {}
+  use_max_threads: false
+  file_extensions:
+    verilog:
+    - .v
+    systemverilog:
+    - .sv
+    vhdl:
+    - .vhd
+    - .vhdl
+    cpp:
+    - .cpp
+    - .cc
+    synth_constraints:
+    - .sdc
+    - .xdc
+    dotf:
+    - .f
+    - .vc
+    python:
+    - .py
+    makefile:
+    - .mk
+    inferred_top:
+    - .v
+    - .sv
+    - .vhd
+    - .vhdl
+  command_determines_tool:
+  - waves
+  - upload
+  command_tool_is_optional:
+  - shell
+  - flist
+  - export
+  - targets
+  - deps-help
+  command_has_subcommands:
+  - multi
+  - tools-multi
+  - sweep
+  auto_tools_order:
+    lint:
+    - slang
+    - surelog
+    - verilator
+    - vivado
+    - modelsim_ase
+    - questa_fse
+    - questa_fe
+    - questa
+    - riviera
+    - iverilog
+    - invio
+    elab:
+    - slang
+    - surelog
+    - verilator
+    - vivado
+    - modelsim_ase
+    - questa_fse
+    - questa_fe
+    - questa
+    - slang_yosys
+    - riviera
+    - iverilog
+    - invio
+    - invio_yosys
+    sim:
+    - verilator
+    - vivado
+    - modelsim_ase
+    - questa_fse
+    - questa_fe
+    - questa
+    - riviera
+    - iverilog
+    synth:
+    - slang_yosys
+    - vivado
+    - quartus
+    - tabbycad_yosys
+    - invio_yosys
+    - yosys
+    proj:
+    - vivado
+    - quartus
+    pnr:
+    - openroad
+    build:
+    - vivado
+    - quartus
+    open:
+    - vivado
+    - quartus
+    lec:
+    - slang_yosys
+    - yosys
+    waves:
+    - cognichip-beta
+    - cognichip
+    - vaporview
+    - gtkwave
+    - surfer
+    - vivado
+    - questa
+    - questa_fe
+    - questa_fse
+    - modelsim_ase
+    - riviera
+    upload:
+    - vivado
+    - quartus
+  tools:
+    cognichip:
+      macos-app-name: Cognichip
+      macos-prefer-exes:
+      - cognichip
+      - code
+      handlers:
+        waves: opencos.tools.cognichip.CommandWavesCognichip
+      waves-file-ext:
+      - .vcd
+      - .fst
+    cognichip-beta:
+      macos-app-name: Cognichip Beta
+      macos-prefer-exes:
+      - cognichip-beta
+      - code
+      handlers:
+        waves: opencos.tools.cognichip.CommandWavesCognichipBeta
+      waves-file-ext:
+      - .vcd
+      - .fst
+    vaporview:
+      exe: code
+      macos-app-name: Visual Studio Code
+      requires-vscode-extension:
+      - lramseyer.vaporview
+      handlers:
+        waves: opencos.tools.vaporview.CommandWavesVaporview
+      waves-file-ext:
+      - .vcd
+      - .fst
+    surfer:
+      exe: code
+      macos-app-name: Visual Studio Code
+      requires-vscode-extension:
+      - surfer-project.surfer
+      handlers:
+        waves: opencos.tools.surfer.CommandWavesSurfer
+      waves-file-ext:
+      - .vcd
+      - .fst
+    gtkwave:
+      handlers:
+        waves: opencos.tools.gtkwave.CommandWavesGtkwave
+      waves-file-ext:
+      - .vcd
+      - .fst
+    slang:
+      requires-cmd:
+      - slang --version
+      handlers:
+        lint: opencos.tools.slang.CommandLintSlang
+        elab: opencos.tools.slang.CommandElabSlang
+      defines:
+        OC_TOOL_SLANG: null
+        SLANG: 1
+      log-warning-strings:
+      - ': warning: '
+      log-bad-strings:
+      - 'Build failed: '
+      log-must-strings:
+      - 'Build succeeded: '
+      - 0 warnings
+      compile-args: '--single-unit
+
+        --timescale=1ns/1ns
+
+        --allow-dup-initial-drivers
+
+        -Wno-missing-top
+
+        '
+      compile-waivers: []
+    verilator:
+      docker-support: true
+      docker-default-image: verilator/verilator:latest
+      docker-env:
+        verilator/verilator:
+          CCACHE_DIR: /tmp/ccache
+      handlers:
+        lint: opencos.tools.verilator.VerilatorLint
+        elab: opencos.tools.verilator.VerilatorElab
+        sim: opencos.tools.verilator.VerilatorSim
+      defines:
+        SIMULATION: 1
+      log-warning-strings:
+      - '%Warning'
+      log-bad-strings:
+      - '%Error'
+      - '%Fatal'
+      log-must-strings:
+      - 'R e p o r t: Verilator'
+      compile-args: '--timing
+
+        --assert
+
+        --autoflush
+
+        -sv
+
+        '
+      compile-coverage-args: '--coverage
+
+        '
+      compile-waves-args: '--trace-structs
+
+        --trace-params
+
+        '
+      compile-waivers:
+      - CASEINCOMPLETE
+      - REALCVT
+      - SELRANGE
+      - TIMESCALEMOD
+      - UNSIGNED
+      - WIDTH
+      simulate-args: ''
+      coverage-args: '--annotate logs/annotated
+
+        coverage.dat
+
+        '
+      simulate-waves-args: ''
+    surelog:
+      requires-cmd:
+      - surelog --version
+      handlers:
+        lint: opencos.tools.surelog.CommandLintSurelog
+        elab: opencos.tools.surelog.CommandElabSurelog
+      defines:
+        OC_TOOL_SURELOG: null
+      compile-args: '-parse
+
+        -timescale=1ns/1ns
+
+        '
+    invio:
+      exe: python3
+      requires-cmd:
+      - python3 -c "import invio"
+      requires-py:
+      - invio
+      handlers:
+        lint: opencos.tools.invio.CommandLintInvio
+        elab: opencos.tools.invio.CommandElabInvio
+      defines:
+        OC_TOOL_INVIO: null
+        INVIO: null
+        VERIFIC: null
+    riviera:
+      exe: vsim
+      requires-cmd:
+      - which riviera
+      requires-vsim-helper: true
+      handlers:
+        lint: opencos.tools.riviera.CommandLintRiviera
+        elab: opencos.tools.riviera.CommandElabRiviera
+        sim: opencos.tools.riviera.CommandSimRiviera
+        flist: opencos.tools.riviera.CommandFListRiviera
+        waves: opencos.tools.riviera.CommandWavesRiviera
+        coverage: opencos.tools.riviera.CommandCoverageRiviera
+      waves-file-ext:
+      - .fst
+      defines:
+        OC_TOOL_RIVIERA: 1
+        RIVIERA: 1
+        OC_TOOL_BROKEN_TYPE_COMPARISON: 1
+      log-warning-strings:
+      - 'Warning: '
+      log-bad-strings:
+      - 'Error: '
+      - 'Fatal: '
+      - You do not have a valid license to run
+      log-must-strings:
+      - 'VSIM: Simulation has finished'
+      compile-args: '-echo -sv -input_ports net -dbg +accb +accr +accs +dacc
+
+        '
+      compile-coverage-args: '-coverage sbecam -coverage_options count
+
+        '
+      simulate-waves-args: '+accb +accr +access +r+w
+
+        '
+      coverage-args: '-cc -acdb -acdb_cov sbfectapm
+
+        '
+      simulate-coverage-tcl:
+      - acdb save
+      - acdb report -i work.acdb -txt -o cov.txt
+      - acdb report -i work.acdb -txt -o covg.txt -show covergroups
+    modelsim_ase:
+      exe: vsim
+      requires-vsim-helper: true
+      handlers:
+        lint: opencos.tools.modelsim_ase.CommandLintModelsimAse
+        elab: opencos.tools.modelsim_ase.CommandElabModelsimAse
+        sim: opencos.tools.modelsim_ase.CommandSimModelsimAse
+        flist: opencos.tools.modelsim_ase.CommandFListModelsimAse
+        waves: opencos.tools.modelsim_ase.CommandWavesModelsimAse
+      waves-file-ext:
+      - .wlf
+      defines:
+        OC_ASSERT_PROPERTY_NOT_SUPPORTED: 1
+        OC_TOOL_MODELSIM_ASE: 1
+        OC_TOOL_BROKEN_TYPE_COMPARISON: 1
+      log-warning-strings:
+      - 'Warning: '
+      log-bad-strings:
+      - 'Error: '
+      - 'Fatal: '
+      log-must-strings:
+      - ' vsim '
+      - 'Errors: 0'
+      compile-args: '-sv -svinputport=net -lint
+
+        '
+      compile-waivers:
+      - 2275
+      - 2555
+      - 2583
+      - 13159
+      - 2685
+      - 2718
+      simulate-waivers:
+      - 3009
+      simulate-waves-args: '+acc
+
+        '
+    questa_fe:
+      exe: vsim
+      requires-vsim-helper: true
+      handlers:
+        lint: opencos.tools.questa_fe.CommandLintQuestaFe
+        elab: opencos.tools.questa_fe.CommandElabQuestaFe
+        sim: opencos.tools.questa_fe.CommandSimQuestaFe
+        flist: opencos.tools.questa_fe.CommandFListQuestaFe
+        waves: opencos.tools.questa_fe.CommandWavesQuestaFe
+      waves-file-ext:
+      - .wlf
+      defines:
+        OC_TOOL_QUESTA_FE: 1
+      log-warning-strings:
+      - 'Warning: '
+      log-bad-strings:
+      - 'Error: '
+      - 'Fatal: '
+      log-must-strings:
+      - ' vsim '
+      - 'Errors: 0'
+      compile-args: '-sv -svinputport=net -lint
+
+        '
+      compile-waivers:
+      - 2275
+      - 2555
+      - 2583
+      - 13159
+      - 2685
+      - 2718
+      simulate-waivers:
+      - 3009
+      simulate-waves-args: '-voptargs=+acc=bcnprst
+
+        '
+    questa_fse:
+      exe: vsim
+      requires-vsim-helper: true
+      handlers:
+        lint: opencos.tools.questa_fse.CommandLintQuestaFse
+        elab: opencos.tools.questa_fse.CommandElabQuestaFse
+        sim: opencos.tools.questa_fse.CommandSimQuestaFse
+        flist: opencos.tools.questa_fse.CommandFListQuestaFse
+        waves: opencos.tools.questa_fse.CommandWavesQuestaFse
+      waves-file-ext:
+      - .wlf
+      defines:
+        OC_TOOL_QUESTA_FSE: 1
+      log-warning-strings:
+      - 'Warning: '
+      log-bad-strings:
+      - 'Error: '
+      - 'Fatal: '
+      log-must-strings:
+      - ' vsim '
+      - 'Errors: 0'
+      compile-args: '-sv -svinputport=net -lint
+
+        '
+      compile-waivers:
+      - 2275
+      - 2555
+      - 2583
+      - 13159
+      - 2685
+      - 2718
+      simulate-waivers:
+      - 3009
+      simulate-waves-args: '-voptargs=+acc=bcnprst
+
+        '
+    questa:
+      exe: vsim
+      requires-vsim-helper: true
+      handlers:
+        lint: opencos.tools.questa.CommandLintQuesta
+        elab: opencos.tools.questa.CommandElabQuesta
+        sim: opencos.tools.questa.CommandSimQuesta
+        flist: opencos.tools.questa.CommandFListQuesta
+        waves: opencos.tools.questa.CommandWavesQuesta
+      waves-file-ext:
+      - .wlf
+      defines:
+        OC_TOOL_QUESTA: 1
+      log-warning-strings:
+      - 'Warning: '
+      log-bad-strings:
+      - 'Error: '
+      - 'Fatal: '
+      log-must-strings:
+      - ' vsim '
+      - 'Errors: 0'
+      compile-args: '-sv -svinputport=net -lint
+
+        '
+      compile-waivers:
+      - 2275
+      - 2555
+      - 2583
+      - 13159
+      - 2685
+      - 2718
+      simulate-waivers:
+      - 3009
+      simulate-waves-args: '-voptargs=+acc=bcnprst
+
+        '
+    iverilog:
+      exe: iverilog
+      handlers:
+        lint: opencos.tools.iverilog.CommandLintIverilog
+        elab: opencos.tools.iverilog.CommandElabIverilog
+        sim: opencos.tools.iverilog.CommandSimIverilog
+      defines:
+        SIMULATION: 1
+        IVERILOG: 1
+        OC_ASSERT_PROPERTY_NOT_SUPPORTED: 1
+      log-warning-strings:
+      - 'Warning:'
+      - 'WARNING:'
+      log-bad-strings:
+      - 'Error:'
+      - 'ERROR:'
+      - 'error:'
+      - 'FATAL:'
+      - 'Fatal:'
+      - 'fatal:'
+      - ': syntax error'
+      - I give up
+      compile-args: '-g2012
+
+        -gsupported-assertions
+
+        -grelative-include
+
+        '
+      simulate-waves-args: '+trace
+
+        '
+    cocotb:
+      disable-auto: true
+      exe: python
+      requires-cmd:
+      - python -c "import cocotb; print(cocotb.__version__)"
+      requires-py:
+      - cocotb
+      handlers:
+        sim: opencos.tools.cocotb.CommandSimCocotb
+      defines:
+        OC_TOOL_COCOTB: null
+        COCOTB: 1
+        SIMULATION: 1
+      log-warning-strings:
+      - 'Warning:'
+      - 'WARNING:'
+      log-bad-strings:
+      - ERROR
+      - FAILED
+      - AssertionError
+      - Exception
+      - Traceback
+      - COCOTB_TEST_FAILED
+      log-must-strings:
+      - passed
+    quartus:
+      exe: quartus_sh
+      handlers:
+        synth: opencos.tools.quartus.CommandSynthQuartus
+        build: opencos.tools.quartus.CommandBuildQuartus
+        flist: opencos.tools.quartus.CommandFListQuartus
+        proj: opencos.tools.quartus.CommandProjQuartus
+        upload: opencos.tools.quartus.CommandUploadQuartus
+        open: opencos.tools.quartus.CommandOpenQuartus
+      upload-file-ext:
+      - .sof
+      defines:
+        OC_TOOL_QUARTUS: null
+    vivado:
+      docker-support: true
+      docker-default-image: siliconbootcamp/xsim-synth-2024:stable
+      docker-env:
+        siliconbootcamp/xsim-synth-2024:
+          LD_PRELOAD: /lib/x86_64-linux-gnu/libudev.so.1
+          PATH: /tools/Xilinx/Vivado/2024.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+          XILINX_VIVADO: /tools/Xilinx/Vivado/2024.1
+      handlers:
+        lint: opencos.tools.vivado.CommandLintVivado
+        elab: opencos.tools.vivado.CommandElabVivado
+        sim: opencos.tools.vivado.CommandSimVivado
+        synth: opencos.tools.vivado.CommandSynthVivado
+        proj: opencos.tools.vivado.CommandProjVivado
+        upload: opencos.tools.vivado.CommandUploadVivado
+        open: opencos.tools.vivado.CommandOpenVivado
+        flist: opencos.tools.vivado.CommandFListVivado
+        build: opencos.tools.vivado.CommandBuildVivado
+        waves: opencos.tools.vivado.CommandWavesVivado
+      waves-file-ext:
+      - .wdb
+      upload-file-ext:
+      - .bit
+      log-warning-strings:
+      - 'WARNING: '
+      - 'Warning: '
+      log-bad-strings:
+      - 'FATAL: '
+      - 'Fatal: '
+      - 'ERROR: '
+      - 'Error: '
+      sim-libraries:
+      - xil_defaultlib
+      - unisims_ver
+      - unimacro_ver
+      - xpm
+      - secureip
+      - xilinx_vip
+      compile-args: ''
+      elab-args: '-s snapshot -timescale 1ns/1ps --stats
+
+        '
+      simulate-args: 'snapshot --stats --onerror quit
+
+        '
+    slang_yosys:
+      exe: yosys
+      requires-cmd:
+      - yosys -m slang
+      handlers:
+        flist: opencos.tools.slang_yosys.CommandFListSlangYosys
+        elab: opencos.tools.slang_yosys.CommandElabSlangYosys
+        synth: opencos.tools.slang_yosys.CommandSynthSlangYosys
+        lec: opencos.tools.slang_yosys.CommandLecSlangYosys
+      tcl-command-args:
+        read_slang:
+        - --ignore-unknown-modules
+        - --best-effort-hierarchy
+        - --ignore-timing
+      defines:
+        OC_TOOL_YOSYS: null
+        OC_TOOL_SLANG: null
+        SLANG: 1
+    tabbycad_yosys:
+      exe: yosys
+      requires-env:
+      - YOSYSHQ_LICENSE
+      handlers:
+        synth: opencos.tools.tabbycad_yosys.CommandSynthTabbyCadYosys
+      defines:
+        OC_TOOL_YOSYS: null
+        OC_TOOL_TABBYCAD: null
+    invio_yosys:
+      exe: yosys
+      requires-cmd:
+      - python -c "import invio"
+      requires-py:
+      - invio
+      handlers:
+        elab: opencos.tools.invio_yosys.CommandElabInvioYosys
+        synth: opencos.tools.invio_yosys.CommandSynthInvioYosys
+        OC_TOOL_YOSYS: null
+        OC_TOOL_INVIO: null
+    yosys:
+      requires-cmd:
+      - yosys
+      handlers:
+        flist: opencos.tools.slang_yosys.CommonFListYosys
+        synth: opencos.tools.slang_yosys.CommonSynthYosys
+        lec: opencos.tools.slang_yosys.CommandLecYosys
+    openroad:
+      exe: null
+      docker-support: true
+      docker-default-image: ghcr.io/cognichip/openroad-flow:latest
+      requires-docker: true
+      requires-cmd:
+      - bash --version
+      handlers:
+        pnr: opencos.tools.openroad.CommandPnrOpenRoad
+  config-yml: /home/smita/.local/share/pipx/venvs/opencos-eda/lib/python3.12/site-packages/opencos/eda_config_defaults.yml
+  tool: null
+  command: sim
+  command_handler: '{''sim'': <class ''opencos.tools.verilator.VerilatorSim''>, ''lint'':
+    <class ''opencos.tools.verilator.VerilatorLint''>, ''elab'': <class ''opencos.tools.verilator.VerilatorElab''>}'
+  auto_tools_found:
+    verilator: /usr/bin/verilator
+    iverilog: /usr/bin/iverilog
+  tools_loaded:
+  - verilator
+  - iverilog
+  eda_original_args:
+  - sim
+  - bench_cva6_hbm3
+target: bench_cva6_hbm3
+args:
+  keep: false
+  force: false
+  fake: false
+  stop-before-compile: false
+  stop-after-compile: false
+  stop-after-elaborate: false
+  lint: false
+  eda-dir: eda.work
+  job-name: ''
+  work-dir: eda.work/bench_cva6_hbm3.sim
+  sub-work-dir: bench_cva6_hbm3.sim
+  work-dir-use-target-dir: false
+  suffix: ''
+  design: tb_cva6_minimal_top
+  export: false
+  export-run: false
+  export-json: false
+  enable-tags: []
+  disable-tags: []
+  test-mode: false
+  error-unknown-args: true
+  threads: 1
+  use-max-threads: false
+  subprocess-timeout: 0
+  seed: 1440337433
+  top: tb_cva6_minimal_top
+  all-sv: true
+  unprocessed-plusargs: []
+  pre-sim-tcl: []
+  compile-args: []
+  compile-waivers: []
+  elab-args: []
+  sim-args: []
+  sim-plusargs: []
+  sim-library: []
+  sim-waivers: []
+  coverage: false
+  waves: false
+  waves-start: 0
+  pass-pattern: ''
+  optimize: false
+  log-bad-strings:
+  - '%Error'
+  - '%Fatal'
+  log-must-strings:
+  - 'R e p o r t: Verilator'
+  log-warning-strings:
+  - '%Warning'
+  uvm: false
+  uvm-version: '1.2'
+  verilate-args: []
+  ext-defines-sv-fname: ''
+  license-queue: false
+  license-queue-value: '30'
+  library-map: []
+  add-top-library: []
+  docker-run: false
+  docker-image: verilator/verilator:latest
+  tool: verilator
+  gui: false
+  dump-vcd: false
+  waves-fst: true
+  waves-vcd: false
+  lint-only: false
+  cc-mode: false
+  verilator-coverage-args: []
+  x-assign: ''
+  x-initial: ''
+modified_args:
+  top: true
+defines:
+  SIMULATION: 1
+incdirs:
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src
+files_v: []
+files_sv:
+- /home/smita/cva6_min_version/src/cva6_boot_rom.v
+- /home/smita/cva6_min_version/src/cva6_data_ram.v
+- /home/smita/cva6_min_version/src/cva6_min_core.v
+- /home/smita/cva6_min_version/src/simple_uart_tx.v
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv
+- /home/smita/cva6_min_version/src/cva6_minimal_top.v
+- /home/smita/cva6_min_version/tb/tb_cva6_minimal_top.v
+files_vhd: []
+files_cpp: []
+files_sdc: []
+files_non_source:
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_rtl_defines.svh
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_rtl_defines.svh
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/cmdmgr_rtl_defines.svh
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/cmdpr_rtl_defines.svh
+- /home/smita/cva6_min_version/Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/dfi_rtl_defines.svh
+util:
+  INITIAL_CWD: /home/smita/cva6_min_version/sim
+  args:
+    color: true
+    emoji: true
+    quiet: false
+    verbose: false
+    debug: false
+    fancy: true
+    warnings: 0
+    errors: 0
+    artifacts-json: true
+  dot_f_files_expanded: []
+  env_files_loaded: []
+  max_error_code: 0
+config_yml: eda_config_defaults.yml
+config_yml_set_from: ''
+non_default_config_yml_arg_used: ''

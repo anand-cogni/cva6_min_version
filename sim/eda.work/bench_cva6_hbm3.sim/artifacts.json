@@ -1,0 +1,20 @@
+{
+    "eda.log": {
+        "name": "eda.work/eda.log",
+        "type": "text",
+        "size": 1981758,
+        "description": "EDA stdout logfile"
+    },
+    "compile.log": {
+        "name": "eda.work/bench_cva6_hbm3.sim/compile.log",
+        "type": "text",
+        "size": 10441,
+        "description": "Verilator compile step log from verilator call"
+    },
+    "eda.errors.log": {
+        "name": "eda.work/bench_cva6_hbm3.sim/eda.errors.log",
+        "type": "text",
+        "size": 0,
+        "description": "EDA reported errors"
+    }
+}

@@ -1,0 +1,332 @@
+Command: vcs -full64 -sverilog -timescale=1ns/1ps -debug_access+all -kdb -l compile.log \
+-f filelist.f -top tb_cva6_minimal_top
+                         Chronologic VCS (TM)
+      Version W-2024.09-SP2-7_Full64 -- Fri Mar  6 15:40:47 2026
+
+                    Copyright (c) 1991 - 2025 Synopsys, Inc.
+   This software and the associated documentation are proprietary to Synopsys,
+ Inc. This software may only be used in accordance with the terms and conditions
+ of a written license agreement with Synopsys, Inc. All other use, reproduction,
+   or distribution of this software is strictly prohibited.  Licensed Products
+     communicate with Synopsys servers for the purpose of providing software
+    updates, detecting software piracy and verifying that customers are using
+    Licensed Products in conformity with the applicable License Key for such
+  Licensed Products. Synopsys will use information gathered in connection with
+    this process to deliver software updates and pursue software pirates and
+                                   infringers.
+
+ Inclusivity & Diversity - Visit SolvNetPlus to read the "Synopsys Statement on
+            Inclusivity and Diversity" (Refer to article 000036315 at
+                        https://solvnetplus.synopsys.com)
+
+Parsing design file '../src/cva6_boot_rom.v'
+Parsing design file '../src/cva6_data_ram.v'
+Parsing design file '../src/cva6_min_core.v'
+Parsing design file '../src/cva6_minimal_top.v'
+Parsing design file '../src/simple_uart_tx.v'
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_rtl_defines.svh'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_rtl_defines.svh'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/cmdmgr_rtl_defines.svh'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/cmdpr_rtl_defines.svh'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_rtl_defines.h'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/dfi_rtl_defines.svh'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/phy_rtl_defines.h'.
+Back to file '../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv'.
+Parsing design file '../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv'
+Parsing included file '../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/dfi_rtl_defines.svh'.
+Back to file '../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv'.
+Parsing design file '../tb/tb_cva6_minimal_top.v'
+Top Level Modules:
+       tb_cva6_minimal_top
+TimeScale is 1 ns / 1 ps
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 286
+"apb_slave u_apb_slave( .clock (pclk),  .reset (presetn),  .paddr (paddr),  .psel (psel),  .penable (penable),  .pwrite (pwrite),  .pwdata (pwdata),  .pprot (3'b0),  .pstrb (4'hf),  .prdata (prdata),  .pready (pready),  .pslverr (pslverr),  .cmd_busy (cmdpr_to_refctrl_cmd_proc_busy),  .train_complete (1'b1),  .init_complete (1'b1),  .refresh_active (1'b0),  .cmd_queue_full (queue_full),  .cmd_queue_empty (queue_empty),  .reorder_queue_full (1'b0),  .reorder_queue_empty (1'b0),  .ctrl_ready (1'b1),  .ch_error (ch_error_stub),  .ch_train_done (ch_train_done_stub),  .ch_state (ch_state_stub),  .ch_active_banks (ch_active_banks_stub),  .ch_read_count (ch_read_count_stub),  .ch_write_count (ch_write_count_stub),  .ctrl_en (ctrl_en),  .init_start (init_start), ... "
+  The following 12-bit expression is connected to 32-bit port "paddr" of 
+  module "apb_slave", instance "u_apb_slave".
+  Expression: paddr
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/apb_slave/src/apb_slave.sv",
+  28
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 357
+"axi_slave_interface u_axi_slave( .clock (aclk),  .reset_n (aresetn),  .awid (awid),  .awaddr (awaddr),  .awlen (awlen),  .awsize (awsize),  .awburst (awburst),  .awlock (awlock),  .awcache (awcache),  .awprot (awprot),  .awqos (awqos),  .awregion (awregion),  .awuser (awuser),  .awvalid (awvalid),  .awready (awready),  .wdata (wdata),  .wstrb (wstrb),  .wlast (wlast),  .wuser (wuser),  .wvalid (wvalid),  .wready (wready),  .bid (bid),  .bresp (bresp),  .buser (buser),  .bvalid (bvalid),  .bready (bready),  .arid (arid),  .araddr (araddr),  .arlen (arlen),  .arsize (arsize),  .arburst (arburst),  .arlock (arlock),  .arcache (arcache),  .arprot (arprot),  .arqos (arqos),  .arregion (arregion),  .aruser (aruser),  .arvalid (arvalid),  .arready (arready),   ... "
+  The following 128-bit expression is connected to 64-bit port 
+  "cqm_axi_rd_queue_data" of module "axi_slave_interface", instance 
+  "u_axi_slave".
+  Expression: rd_queue_data
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/axi5_slave/src/axi_slave_interface.sv",
+  9
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 434
+"command_manager u_command_manager( .clock (aclk),  .reset (aresetn),  .axi_cqm_cmd_wr_en (cmd_wr_en),  .axi_cqm_cmd_wr_data (cmd_wr_data),  .axi_cqm_qtype (qtype),  .cmd_wr_ready (cmd_wr_ready),  .cqm_axi_queue_full (queue_full),  .cqm_axi_queue_empty (queue_empty),  .cqm_axi_rd_queue_data (rd_queue_data),  .cqm_axi_rd_queue_valid (rd_queue_valid),  .axi_cqm_rd_queue_rd_en (rd_queue_rd_en),  .cqm_axi_rd_queue_empty (rd_queue_empty),  .cqm_axi_rd_queue_full (rd_queue_full),  .cmdmngr_to_cmdprocessor_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdmngr_to_cmdprocessor_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmngr_to_cmdprocessor_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmngr_to_cmdprocessor_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),   ... "
+  The following 128-bit expression is connected to 64-bit port 
+  "cqm_axi_rd_queue_data" of module "command_manager", instance 
+  "u_command_manager".
+  Expression: rd_queue_data
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv",
+  74
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 434
+"command_manager u_command_manager( .clock (aclk),  .reset (aresetn),  .axi_cqm_cmd_wr_en (cmd_wr_en),  .axi_cqm_cmd_wr_data (cmd_wr_data),  .axi_cqm_qtype (qtype),  .cmd_wr_ready (cmd_wr_ready),  .cqm_axi_queue_full (queue_full),  .cqm_axi_queue_empty (queue_empty),  .cqm_axi_rd_queue_data (rd_queue_data),  .cqm_axi_rd_queue_valid (rd_queue_valid),  .axi_cqm_rd_queue_rd_en (rd_queue_rd_en),  .cqm_axi_rd_queue_empty (rd_queue_empty),  .cqm_axi_rd_queue_full (rd_queue_full),  .cmdmngr_to_cmdprocessor_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdmngr_to_cmdprocessor_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmngr_to_cmdprocessor_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmngr_to_cmdprocessor_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),   ... "
+  The following 4-bit expression is connected to 8-bit port 
+  "cmdmngr_to_cmdprocessor_cmd_type" of module "command_manager", instance 
+  "u_command_manager".
+  Expression: cmdmngr_to_cmdprocessor_cmd_type
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/cmd_manager/src/command_manager.sv",
+  74
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 477
+"refresh_ctrl u_refresh_controller( .clk (aclk),  .rst_n (aresetn),  .cmdmgr_refctrl_refresh_cmd_valid (cmdmgr_refctrl_refresh_cmd_valid),  .cmdmgr_refctrl_refresh_per_bank (cmdmgr_refctrl_refresh_per_bank),  .cmdmgr_refctrl_refresh_all_banks (cmdmgr_refctrl_refresh_all_banks),  .refctrl_cmdmgr_ref_done (refctrl_cmdmgr_ref_done),  .refctrl_cmdpr_ref_cmd_valid (refctrl_to_cmdpr_ref_cmd_valid),  .refctrl_cmdpr_ref_bank (refctrl_to_cmdpr_ref_bank),  .refctrl_cmdpr_ref_all_banks (refctrl_to_cmdpr_ref_all_banks),  .cmdpr_refctrl_ref_done (cmdpr_to_refctrl_ref_done),  .cmdpr_refctrl_ref_cmd_ready (cmdpr_to_refctrl_ref_cmd_ready));"
+  The following 3-bit expression is connected to 4-bit port 
+  "cmdmgr_refctrl_refresh_per_bank" of module "refresh_ctrl", instance 
+  "u_refresh_controller".
+  Expression: cmdmgr_refctrl_refresh_per_bank
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv",
+  14
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 477
+"refresh_ctrl u_refresh_controller( .clk (aclk),  .rst_n (aresetn),  .cmdmgr_refctrl_refresh_cmd_valid (cmdmgr_refctrl_refresh_cmd_valid),  .cmdmgr_refctrl_refresh_per_bank (cmdmgr_refctrl_refresh_per_bank),  .cmdmgr_refctrl_refresh_all_banks (cmdmgr_refctrl_refresh_all_banks),  .refctrl_cmdmgr_ref_done (refctrl_cmdmgr_ref_done),  .refctrl_cmdpr_ref_cmd_valid (refctrl_to_cmdpr_ref_cmd_valid),  .refctrl_cmdpr_ref_bank (refctrl_to_cmdpr_ref_bank),  .refctrl_cmdpr_ref_all_banks (refctrl_to_cmdpr_ref_all_banks),  .cmdpr_refctrl_ref_done (cmdpr_to_refctrl_ref_done),  .cmdpr_refctrl_ref_cmd_ready (cmdpr_to_refctrl_ref_cmd_ready));"
+  The following 3-bit expression is connected to 4-bit port 
+  "refctrl_cmdpr_ref_bank" of module "refresh_ctrl", instance 
+  "u_refresh_controller".
+  Expression: refctrl_to_cmdpr_ref_bank
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/refresh_controller/src/refresh_ctrl.sv",
+  14
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 4-bit expression is connected to 8-bit port 
+  "cmdmgr_to_cmdpr_cmd_type" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdmngr_to_cmdprocessor_cmd_type
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 3-bit expression is connected to 4-bit port 
+  "cmdmgr_to_cmdpr_cmd_bank" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdmngr_to_cmdprocessor_cmd_bank
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 16-bit expression is connected to 15-bit port 
+  "cmdmgr_to_cmdpr_cmd_row" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdmngr_to_cmdprocessor_cmd_row
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 3-bit expression is connected to 4-bit port 
+  "refctrl_to_cmdpr_ref_bank" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: refctrl_to_cmdpr_ref_bank
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 4-bit expression is connected to 8-bit port 
+  "cmdpr_to_dfi_cmd_type" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdpr_to_dfi_cmd_type
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 3-bit expression is connected to 4-bit port 
+  "cmdpr_to_dfi_bank" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdpr_to_dfi_bank
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 16-bit expression is connected to 15-bit port 
+  "cmdpr_to_dfi_row" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdpr_to_dfi_row
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 495
+"command_processor u_command_processor( .clock (aclk),  .reset_n (aresetn),  .cmdmgr_to_cmdpr_cmd_valid (cmdmngr_to_cmdprocessor_cmd_valid),  .cmdpr_to_cmdmgr_cmd_ready (cmdprocessor_to_cmdmngr_cmd_ready),  .cmdmgr_to_cmdpr_cmd_type (cmdmngr_to_cmdprocessor_cmd_type),  .cmdmgr_to_cmdpr_cmd_channel (cmdmngr_to_cmdprocessor_cmd_channel),  .cmdmgr_to_cmdpr_cmd_bank_group (cmdmngr_to_cmdprocessor_cmd_bank_group),  .cmdmgr_to_cmdpr_cmd_bank (cmdmngr_to_cmdprocessor_cmd_bank),  .cmdmgr_to_cmdpr_cmd_row (cmdmngr_to_cmdprocessor_cmd_row),  .cmdmgr_to_cmdpr_cmd_col (cmdmngr_to_cmdprocessor_cmd_col),  .cmdmgr_to_cmdpr_write_data (cmdmngr_to_cmdprocessor_cmd_data),  .cmdmgr_to_cmdpr_write_data_mask (cmdmngr_to_cmdprocessor_cmd_data_mask),  .cmdmgr_to_cmdpr_cmd_burs ... "
+  The following 4-bit expression is connected to 8-bit port 
+  "cmdpr_to_dfi_wrdata_mask" of module "command_processor", instance 
+  "u_command_processor".
+  Expression: cmdpr_to_dfi_wrdata_mask
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/command_processor/src/command_processor.sv",
+  3
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 582
+"hbm3_dfi_interface u_hbm3_dfi_interface( .clock (aclk),  .reset_n (aresetn),  .cmp_to_dfi_tRCD (cmdpr_to_dfi_tRCD),  .cmp_to_dfi_tRAS (cmdpr_to_dfi_tRAS),  .cmp_to_dfi_tRP (cmdpr_to_dfi_tRP),  .cmp_to_dfi_tRC (cmdpr_to_dfi_tRC),  .cmp_to_dfi_tRFC (cmdpr_to_dfi_tRFC),  .cmp_to_dfi_write_latency (cmdpr_to_dfi_write_latency),  .cmp_to_dfi_read_latency (cmdpr_to_dfi_read_latency),  .cp_to_dfi_cmd_valid (cmdpr_to_dfi_cmd_valid),  .dfi_to_cp_cmd_ready (dfi_to_cmdpr_cmd_ready),  .cp_to_dfi_cmd_type (cmdpr_to_dfi_cmd_type),  .cp_to_dfi_cmd_channel (cmdpr_to_dfi_channel),  .cp_to_dfi_cmd_bank (cmdpr_to_dfi_bank),  .cp_to_dfi_cmd_bank_group (cmdpr_to_dfi_bank_group),  .cp_to_dfi_cmd_row (cmdpr_to_dfi_row),  .cp_to_dfi_cmd_column (cmdpr_to_dfi_col),  .cp_to_dfi_cm ... "
+  The following 3-bit expression is connected to 4-bit port 
+  "cp_to_dfi_cmd_bank" of module "hbm3_dfi_interface", instance 
+  "u_hbm3_dfi_interface".
+  Expression: cmdpr_to_dfi_bank
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv",
+  17
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 582
+"hbm3_dfi_interface u_hbm3_dfi_interface( .clock (aclk),  .reset_n (aresetn),  .cmp_to_dfi_tRCD (cmdpr_to_dfi_tRCD),  .cmp_to_dfi_tRAS (cmdpr_to_dfi_tRAS),  .cmp_to_dfi_tRP (cmdpr_to_dfi_tRP),  .cmp_to_dfi_tRC (cmdpr_to_dfi_tRC),  .cmp_to_dfi_tRFC (cmdpr_to_dfi_tRFC),  .cmp_to_dfi_write_latency (cmdpr_to_dfi_write_latency),  .cmp_to_dfi_read_latency (cmdpr_to_dfi_read_latency),  .cp_to_dfi_cmd_valid (cmdpr_to_dfi_cmd_valid),  .dfi_to_cp_cmd_ready (dfi_to_cmdpr_cmd_ready),  .cp_to_dfi_cmd_type (cmdpr_to_dfi_cmd_type),  .cp_to_dfi_cmd_channel (cmdpr_to_dfi_channel),  .cp_to_dfi_cmd_bank (cmdpr_to_dfi_bank),  .cp_to_dfi_cmd_bank_group (cmdpr_to_dfi_bank_group),  .cp_to_dfi_cmd_row (cmdpr_to_dfi_row),  .cp_to_dfi_cmd_column (cmdpr_to_dfi_col),  .cp_to_dfi_cm ... "
+  The following 16-bit expression is connected to 15-bit port 
+  "cp_to_dfi_cmd_row" of module "hbm3_dfi_interface", instance 
+  "u_hbm3_dfi_interface".
+  Expression: cmdpr_to_dfi_row
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv",
+  17
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 582
+"hbm3_dfi_interface u_hbm3_dfi_interface( .clock (aclk),  .reset_n (aresetn),  .cmp_to_dfi_tRCD (cmdpr_to_dfi_tRCD),  .cmp_to_dfi_tRAS (cmdpr_to_dfi_tRAS),  .cmp_to_dfi_tRP (cmdpr_to_dfi_tRP),  .cmp_to_dfi_tRC (cmdpr_to_dfi_tRC),  .cmp_to_dfi_tRFC (cmdpr_to_dfi_tRFC),  .cmp_to_dfi_write_latency (cmdpr_to_dfi_write_latency),  .cmp_to_dfi_read_latency (cmdpr_to_dfi_read_latency),  .cp_to_dfi_cmd_valid (cmdpr_to_dfi_cmd_valid),  .dfi_to_cp_cmd_ready (dfi_to_cmdpr_cmd_ready),  .cp_to_dfi_cmd_type (cmdpr_to_dfi_cmd_type),  .cp_to_dfi_cmd_channel (cmdpr_to_dfi_channel),  .cp_to_dfi_cmd_bank (cmdpr_to_dfi_bank),  .cp_to_dfi_cmd_bank_group (cmdpr_to_dfi_bank_group),  .cp_to_dfi_cmd_row (cmdpr_to_dfi_row),  .cp_to_dfi_cmd_column (cmdpr_to_dfi_col),  .cp_to_dfi_cm ... "
+  The following 4-bit expression is connected to 8-bit port 
+  "cp_to_dfi_wr_mask" of module "hbm3_dfi_interface", instance 
+  "u_hbm3_dfi_interface".
+  Expression: cmdpr_to_dfi_wrdata_mask
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/rtl_cores/sub_modules/dfi/src/hbm3_dfi_interface.sv",
+  17
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 651
+"hbm3_phy u_hbm3_phy( .clock (aclk),  .reset_n (aresetn),  .dfi_to_phy_address (dfi_to_phy_address),  .dfi_to_phy_bank (dfi_to_phy_bank),  .dfi_to_phy_bank_group (dfi_to_phy_bank_group),  .dfi_to_phy_cs_n (dfi_to_phy_cs_n),  .dfi_to_phy_cke (dfi_to_phy_cke),  .dfi_to_phy_ras_n (dfi_to_phy_ras_n),  .dfi_to_phy_cas_n (dfi_to_phy_cas_n),  .dfi_to_phy_we_n (dfi_to_phy_we_n),  .dfi_to_phy_act_n (dfi_to_phy_act_n),  .dfi_to_phy_wrdata (dfi_to_phy_wrdata),  .dfi_to_phy_wrdata_en (dfi_to_phy_wrdata_en),  .dfi_to_phy_wrdata_mask (dfi_to_phy_wrdata_mask),  .phy_to_dfi_rddata (phy_to_dfi_rddata),  .phy_to_dfi_rddata_valid (phy_to_dfi_rddata_valid),  .phy_to_dfi_rddata_dnv (phy_to_dfi_rddata_dnv),  .phy_to_dram_hbm_ck_t (phy_to_dram_hbm_ck_t),  .phy_to_dram_hbm_ck_c ... "
+  The following 72-bit expression is connected to 137-bit port 
+  "dfi_to_phy_wrdata" of module "hbm3_phy", instance "u_hbm3_phy".
+  Expression: dfi_to_phy_wrdata
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv",
+  33
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 651
+"hbm3_phy u_hbm3_phy( .clock (aclk),  .reset_n (aresetn),  .dfi_to_phy_address (dfi_to_phy_address),  .dfi_to_phy_bank (dfi_to_phy_bank),  .dfi_to_phy_bank_group (dfi_to_phy_bank_group),  .dfi_to_phy_cs_n (dfi_to_phy_cs_n),  .dfi_to_phy_cke (dfi_to_phy_cke),  .dfi_to_phy_ras_n (dfi_to_phy_ras_n),  .dfi_to_phy_cas_n (dfi_to_phy_cas_n),  .dfi_to_phy_we_n (dfi_to_phy_we_n),  .dfi_to_phy_act_n (dfi_to_phy_act_n),  .dfi_to_phy_wrdata (dfi_to_phy_wrdata),  .dfi_to_phy_wrdata_en (dfi_to_phy_wrdata_en),  .dfi_to_phy_wrdata_mask (dfi_to_phy_wrdata_mask),  .phy_to_dfi_rddata (phy_to_dfi_rddata),  .phy_to_dfi_rddata_valid (phy_to_dfi_rddata_valid),  .phy_to_dfi_rddata_dnv (phy_to_dfi_rddata_dnv),  .phy_to_dram_hbm_ck_t (phy_to_dram_hbm_ck_t),  .phy_to_dram_hbm_ck_c ... "
+  The following 9-bit expression is connected to 17-bit port 
+  "dfi_to_phy_wrdata_mask" of module "hbm3_phy", instance "u_hbm3_phy".
+  Expression: dfi_to_phy_wrdata_mask
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv",
+  33
+  Use +lint=PCWM for more details.
+
+
+Warning-[PCWM-W] Port connection width mismatch
+../Vspark_ip_core/LS_HBM3/rtl_cores/integration/src/hbm3_controller_top.sv, 651
+"hbm3_phy u_hbm3_phy( .clock (aclk),  .reset_n (aresetn),  .dfi_to_phy_address (dfi_to_phy_address),  .dfi_to_phy_bank (dfi_to_phy_bank),  .dfi_to_phy_bank_group (dfi_to_phy_bank_group),  .dfi_to_phy_cs_n (dfi_to_phy_cs_n),  .dfi_to_phy_cke (dfi_to_phy_cke),  .dfi_to_phy_ras_n (dfi_to_phy_ras_n),  .dfi_to_phy_cas_n (dfi_to_phy_cas_n),  .dfi_to_phy_we_n (dfi_to_phy_we_n),  .dfi_to_phy_act_n (dfi_to_phy_act_n),  .dfi_to_phy_wrdata (dfi_to_phy_wrdata),  .dfi_to_phy_wrdata_en (dfi_to_phy_wrdata_en),  .dfi_to_phy_wrdata_mask (dfi_to_phy_wrdata_mask),  .phy_to_dfi_rddata (phy_to_dfi_rddata),  .phy_to_dfi_rddata_valid (phy_to_dfi_rddata_valid),  .phy_to_dfi_rddata_dnv (phy_to_dfi_rddata_dnv),  .phy_to_dram_hbm_ck_t (phy_to_dram_hbm_ck_t),  .phy_to_dram_hbm_ck_c ... "
+  The following 72-bit expression is connected to 137-bit port 
+  "phy_to_dfi_rddata" of module "hbm3_phy", instance "u_hbm3_phy".
+  Expression: phy_to_dfi_rddata
+  Instantiated module defined at: 
+  "../Vspark_ip_core/LS_HBM3/testbench/hbm3_sv_core_2.0/src/hbm3_phy/src/hbm3_phy.sv",
+  33
+  Use +lint=PCWM for more details.
+
+Starting vcs inline pass...
+9 modules and 0 UDP read.
+recompiling module tb_cva6_minimal_top
+	However, due to incremental compilation, only 1 module needs to be compiled. 
+make[1]: Entering directory '/projects/cva6/users/smita.s/cva6_min_version/sim/csrc' \
+
+rm -f _cuarc*.so _csrc*.so pre_vcsobj_*.so share_vcsobj_*.so
+if [ -x ../simv ]; then chmod a-x ../simv; fi
+g++  -o ../simv      -rdynamic  -Wl,-rpath='$ORIGIN'/simv.daidir -Wl,-rpath=./simv.daidir \
+-Wl,-rpath=/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib -L/tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib \
+-Wl,-rpath-link=./  /usr/lib64/libnuma.so.1   objs/amcQw_d.o  _2604574_archive_1.so \
+_prev_archive_1.so  SIM_l.o      rmapats_mop.o rmapats.o rmar.o rmar_nd.o  rmar_llvm_0_1.o \
+rmar_llvm_0_0.o            -lvirsim -lerrorinf -lsnpsmalloc -lvfs    -lvcsnew -ldistsimclient \
+-lsimprofile -luclinative /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/vcs_tls.o \
+-Wl,-whole-archive  -lvcsucli    -Wl,-no-whole-archive       _vcs_pli_stub_.o   /tools/eda/synopsys/vcs/W-2024.09-SP2-7/linux64/lib/vcs_save_restore_new.o \
+/tools/eda/synopsys/verdi/W-2024.09-SP2-7/share/PLI/VCS/LINUX64/pli.a -ldl  -lc -lm \
+-lpthread -ldl 
+../simv up to date
+make[1]: Leaving directory '/projects/cva6/users/smita.s/cva6_min_version/sim/csrc' \
+
+CPU time: 1.010 seconds to compile + .329 seconds to elab + .319 seconds to link
+Verdi KDB elaboration done and the database successfully generated
