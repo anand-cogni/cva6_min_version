@@ -51,7 +51,12 @@ module simple_riscv_core (
     output reg  [3:0]  data_be,
     output reg  [31:0] data_addr,
     output reg  [31:0] data_wdata,
-    input  wire [31:0] data_rdata
+    input  wire [31:0] data_rdata,
+    
+    // Instruction Trace Interface (for debug/trace module)
+    output wire [31:0] trace_pc,      // PC of committed instruction
+    output wire [31:0] trace_instr,   // Committed instruction word
+    output wire        trace_valid    // Instruction commit strobe
 );
 
     // ========================================================================
@@ -106,6 +111,18 @@ module simple_riscv_core (
     assign instr_addr = pc;
     
     // ========================================================================
+    // Instruction Trace Outputs
+    // ========================================================================
+    // Capture instruction execution for trace module
+    reg [31:0] committed_pc;
+    reg [31:0] committed_instr;
+    reg        instruction_committed;
+    
+    assign trace_pc    = committed_pc;
+    assign trace_instr = committed_instr;
+    assign trace_valid = instruction_committed;
+    
+    // ========================================================================
     // Execution Logic
     // ========================================================================
     reg [31:0] alu_result;
@@ -146,11 +163,15 @@ module simple_riscv_core (
                     // Execute instruction
                     branch_taken = 1'b0;
                     next_pc = pc + 4;  // Default: next instruction
+                    instruction_committed = 1'b0;  // Default: not committed
+                    committed_pc = pc;
+                    committed_instr = instr;
                     
                     if (is_lui) begin
                         // LUI: rd = imm_u
                         alu_result = imm_u;
                         if (rd != 0) regs[rd] <= alu_result;
+                        instruction_committed = 1'b1;  // Instruction committed
                         state <= FETCH;
                         pc <= next_pc;
                         
@@ -158,6 +179,7 @@ module simple_riscv_core (
                         // ADDI: rd = rs1 + imm_i
                         alu_result = regs[rs1] + imm_i;
                         if (rd != 0) regs[rd] <= alu_result;
+                        instruction_committed = 1'b1;  // Instruction committed
                         state <= FETCH;
                         pc <= next_pc;
                         
@@ -176,6 +198,7 @@ module simple_riscv_core (
                             next_pc = pc + imm_b;
                             branch_taken = 1'b1;
                         end
+                        instruction_committed = 1'b1;  // Instruction committed
                         state <= FETCH;
                         pc <= next_pc;
                         
@@ -183,11 +206,13 @@ module simple_riscv_core (
                         // JAL: rd = pc+4, pc += imm_j
                         if (rd != 0) regs[rd] <= pc + 4;
                         next_pc = pc + imm_j;
+                        instruction_committed = 1'b1;  // Instruction committed
                         state <= FETCH;
                         pc <= next_pc;
                         
                     end else begin
                         // Unknown instruction - NOP
+                        instruction_committed = 1'b1;  // Even NOP is committed
                         state <= FETCH;
                         pc <= next_pc;
                     end
@@ -195,6 +220,9 @@ module simple_riscv_core (
                 
                 MEMORY: begin
                     // Memory operation complete
+                    committed_pc = pc;
+                    committed_instr = instr;
+                    instruction_committed = 1'b1;  // Store instruction committed
                     data_req <= 1'b0;
                     data_we <= 1'b0;
                     state <= FETCH;
@@ -202,7 +230,7 @@ module simple_riscv_core (
                 end
                 
                 default: begin
-                    state <= FETCH;
+                    instruction_committed = 1'b0;
                 end
             endcase
             
