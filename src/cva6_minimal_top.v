@@ -67,7 +67,7 @@ module cva6_minimal_top (
     
     // Synchronize reset
     assign clk = sys_clock;
-    assign reset = reset_sync[3];
+    assign reset = ~reset_sync[3];  // Invert: sys_reset_n (active-low) → reset (active-high)
     assign aresetn = ~reset;  // Convert to active-low for AXI
     
     always @(posedge clk) begin
@@ -142,7 +142,8 @@ module cva6_minimal_top (
     wire        trace_valid;
     
     // Trace control and status
-    reg         trace_enable;
+    reg         trace_enable;       // Enable instruction tracing (bit 0)
+    reg         trace_data_enable;  // Enable HBM3 data tracing (bit 1)
     wire        trace_ctrl_select;
     wire        trace_fifo_full;
     wire        trace_fifo_empty;
@@ -154,6 +155,7 @@ module cva6_minimal_top (
     wire [31:0] trace_uart_addr;
     wire [31:0] trace_uart_wdata;
     wire        uart_ready;
+    wire        uart_fifo_full;   // UART TX FIFO full indicator
     
     // UART Multiplexer signals
     wire        uart_req_mux;
@@ -335,11 +337,17 @@ module cva6_minimal_top (
     // Trace Control Register
     // ========================================================================
     // Control register at 0x22000000 to enable/disable tracing
+    // Bit[0]: Enable instruction tracing
+    // Bit[1]: Enable HBM3 data transaction tracing
     always @(posedge clk) begin
         if (reset) begin
-            trace_enable <= 1'b1;  // Enable tracing by default
+            trace_enable      <= 1'b1;  // Enable instruction tracing by default
+            trace_data_enable <= 1'b1;  // Enable HBM3 data tracing by default
         end else if (data_req && data_we && trace_ctrl_select) begin
-            if (data_be[0]) trace_enable <= data_wdata[0];
+            if (data_be[0]) begin
+                trace_enable      <= data_wdata[0];
+                trace_data_enable <= data_wdata[1];
+            end
         end
     end
     
@@ -353,8 +361,9 @@ module cva6_minimal_top (
     assign uart_addr_mux  = trace_uart_req ? trace_uart_addr  : data_addr;
     assign uart_wdata_mux = trace_uart_req ? trace_uart_wdata : data_wdata;
     
-    // UART ready signal (simplified - always ready for this implementation)
-    assign uart_ready = 1'b1;
+    // UART ready signal - based on FIFO full status
+    // When FIFO is NOT full, UART is ready to accept more data
+    assign uart_ready = !uart_fifo_full;
     
     // ========================================================================
     // UART Debug Transmitter (with Multiplexed Inputs)
@@ -364,23 +373,27 @@ module cva6_minimal_top (
         .BAUD_RATE  (115_200),
         .FIFO_DEPTH (16)
     ) u_uart_debug (
-        .clock      (clk),
-        .reset      (reset),
-        .req        (uart_req_mux),
-        .we         (uart_we_mux),
-        .addr       (uart_addr_mux[2:0]),
-        .wdata      (uart_wdata_mux),
-        .rdata      (uart_rdata),
-        .uart_tx    (uart_tx)
+        .clock          (clk),
+        .reset          (reset),
+        .req            (uart_req_mux),
+        .we             (uart_we_mux),
+        .addr           (uart_addr_mux[2:0]),
+        .wdata          (uart_wdata_mux),
+        .rdata          (uart_rdata),
+        .uart_tx        (uart_tx),
+        .tx_fifo_full   (uart_fifo_full)   // Connect FIFO full status
     );
     
     // ========================================================================
-    // Instruction Trace Module Instance
+    // Unified Trace Module Instance (Instructions + HBM3 Data Transactions)
     // ========================================================================
-    // Captures instruction execution and sends formatted traces via UART
+    // Captures instruction execution AND HBM3 data transactions
+    // Sends formatted traces via UART for debugging
     riscv_instr_trace #(
-        .FIFO_DEPTH (8),              // Buffer 8 trace entries
-        .UART_BASE  (UART_BASE)       // UART base address
+        .FIFO_DEPTH     (64),             // Buffer 64 trace entries (increased from 8)
+        .UART_BASE      (UART_BASE),      // UART base address
+        .HBM3_MEM_BASE  (HBM3_MEM_BASE),  // HBM3 memory base
+        .HBM3_MEM_SIZE  (HBM3_MEM_SIZE)   // HBM3 memory size
     ) u_instr_trace (
         .clk            (clk),
         .reset          (reset),
@@ -389,6 +402,14 @@ module cva6_minimal_top (
         .commit_pc      (trace_pc),
         .commit_instr   (trace_instr),
         .commit_valid   (trace_valid),
+        
+        // Data bus monitoring for HBM3 transactions
+        .data_req       (data_req),
+        .data_we        (data_we),
+        .data_addr      (data_addr),
+        .data_wdata     (data_wdata),
+        .data_rdata     (data_rdata),
+        .data_valid     (data_valid),
         
         // UART interface (multiplexed)
         .uart_req       (trace_uart_req),
@@ -399,10 +420,11 @@ module cva6_minimal_top (
         .uart_ready     (uart_ready),
         
         // Control and status
-        .trace_enable   (trace_enable),
-        .fifo_full      (trace_fifo_full),
-        .fifo_empty     (trace_fifo_empty),
-        .trace_count    (trace_count)
+        .trace_enable       (trace_enable),
+        .trace_data_enable  (trace_data_enable),
+        .fifo_full          (trace_fifo_full),
+        .fifo_empty         (trace_fifo_empty),
+        .trace_count        (trace_count)
     );
     
     // ========================================================================
@@ -629,7 +651,7 @@ module cva6_minimal_top (
                         uart_select       ? uart_rdata :
                         hbm3_select       ? hbm3_rdata :
                         hbm3_cfg_select   ? apb_rdata_reg :
-                        trace_ctrl_select ? {31'h0, trace_enable} :
+                        trace_ctrl_select ? {30'h0, trace_data_enable, trace_enable} :
                         32'h0000_0000;
     
     // Data valid generation

@@ -32,7 +32,10 @@ module simple_uart_tx #(
     output wire [31:0] rdata,
     
     // UART TX pin
-    output wire        uart_tx
+    output wire        uart_tx,
+    
+    // Status outputs
+    output wire        tx_fifo_full   // FIFO full indicator (for flow control)
 );
 
     // ========================================================================
@@ -64,6 +67,9 @@ module simple_uart_tx #(
     assign fifo_full  = (fifo_wr_ptr[FIFO_ADDR_WIDTH] != fifo_rd_ptr[FIFO_ADDR_WIDTH]) &&
                         (fifo_wr_ptr[FIFO_ADDR_WIDTH-1:0] == fifo_rd_ptr[FIFO_ADDR_WIDTH-1:0]);
     assign fifo_empty = (fifo_wr_ptr == fifo_rd_ptr);
+    
+    // Export FIFO full status for flow control
+    assign tx_fifo_full = fifo_full;
     
     // FIFO write enable
     assign fifo_wr_en = req && we && (addr[2:0] == 3'b000) && !fifo_full;
