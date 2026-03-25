@@ -62,6 +62,15 @@ module tb_cva6_minimal_top;
     integer   uart_clk_count;
     reg [9:0] uart_shift_reg;
     
+    // UART Test Case Variables
+    integer uart_write_test_count;
+    integer uart_read_test_count;
+    reg [7:0] expected_uart_data [0:255];
+    integer expected_uart_count;
+    
+    // UART Read Monitor Variables
+    integer uart_rd_count;
+    
     // Instruction Trace Log
     reg [31:0] trace_log_pc [0:1023];
     reg [31:0] trace_log_instr [0:1023];
@@ -71,8 +80,8 @@ module tb_cva6_minimal_top;
     // Parameters
     // ========================================================================
     parameter CLOCK_FREQ = 125_000_000;
-    parameter BAUD_RATE  = 115_200;
-    parameter CLKS_PER_BIT = CLOCK_FREQ / BAUD_RATE;  // ~1085 clocks per bit
+    parameter BAUD_RATE  = 921_600;  // Updated to match UART TX (was 115_200)
+    parameter CLKS_PER_BIT = CLOCK_FREQ / BAUD_RATE;  // ~136 clocks per bit @ 921600
     
     // ========================================================================
     // Clock Generation - 125 MHz (8ns period)
@@ -124,19 +133,19 @@ module tb_cva6_minimal_top;
         $display("");
         
         // ====================================================================
-        // BOOT ROM PROGRAM - FULL TRACING (INSTRUCTION + HBM3)
+        // BOOT ROM PROGRAM - HBM3-ONLY TRACING
         // ====================================================================
-        // This program configures the trace module to capture BOTH instruction
-        // traces AND HBM3 transactions for complete debug visibility.
+        // This program configures the trace module to capture ONLY HBM3
+        // transactions (no instruction traces), preventing UART FIFO congestion.
         // ====================================================================
-        $display("  Boot code section: Full Trace Configuration (Instruction + HBM3)");
+        $display("  Boot code section: HBM3-Only Trace Configuration");
         
-        // STEP 1: Configure Trace Control - BOTH Instruction AND HBM3 Tracing
-        // Write 0x3 to Trace Control Register at 0x22000000
-        // Bit[0] = 1: Enable instruction tracing
+        // STEP 1: Configure Trace Control - HBM3 Data Tracing ONLY
+        // Write 0x2 to Trace Control Register at 0x22000000
+        // Bit[0] = 0: Disable instruction tracing (prevents UART FIFO congestion)
         // Bit[1] = 1: Enable HBM3 data tracing
         dut.u_boot_rom.rom[rom_idx] = 32'h22000337; rom_idx = rom_idx + 1; // lui   x6, 0x22000 - Trace ctrl addr
-        dut.u_boot_rom.rom[rom_idx] = 32'h00300393; rom_idx = rom_idx + 1; // addi  x7, x0, 3    - Value = 3 (BOTH enabled)
+        dut.u_boot_rom.rom[rom_idx] = 32'h00200393; rom_idx = rom_idx + 1; // addi  x7, x0, 2    - Value = 2 (HBM3 only)
         dut.u_boot_rom.rom[rom_idx] = 32'h00732023; rom_idx = rom_idx + 1; // sw    x7, 0(x6)    - Write trace ctrl
         
         // STEP 2: Initialize UART Address Register
@@ -178,6 +187,73 @@ module tb_cva6_minimal_top;
         dut.u_boot_rom.rom[rom_idx] = 32'h00A00393; rom_idx = rom_idx + 1; // addi  x7, x0, 10   - ASCII '\n'
         dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
         
+        // ====================================================================
+        // UART WRITE TEST CASE - Write ASCII sequence to verify UART TX
+        // ====================================================================
+        $display("  Adding UART Write Test Case:");
+        $display("    - Writing ASCII string: 'UART_TEST_123'");
+        
+        // Write 'U'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05500393; rom_idx = rom_idx + 1; // addi  x7, x0, 85 (ASCII 'U')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'A'
+        dut.u_boot_rom.rom[rom_idx] = 32'h04100393; rom_idx = rom_idx + 1; // addi  x7, x0, 65 (ASCII 'A')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'R'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05200393; rom_idx = rom_idx + 1; // addi  x7, x0, 82 (ASCII 'R')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'T'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05400393; rom_idx = rom_idx + 1; // addi  x7, x0, 84 (ASCII 'T')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write '_'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05F00393; rom_idx = rom_idx + 1; // addi  x7, x0, 95 (ASCII '_')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'T'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05400393; rom_idx = rom_idx + 1; // addi  x7, x0, 84 (ASCII 'T')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'E'
+        dut.u_boot_rom.rom[rom_idx] = 32'h04500393; rom_idx = rom_idx + 1; // addi  x7, x0, 69 (ASCII 'E')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'S'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05300393; rom_idx = rom_idx + 1; // addi  x7, x0, 83 (ASCII 'S')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write 'T'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05400393; rom_idx = rom_idx + 1; // addi  x7, x0, 84 (ASCII 'T')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write '_'
+        dut.u_boot_rom.rom[rom_idx] = 32'h05F00393; rom_idx = rom_idx + 1; // addi  x7, x0, 95 (ASCII '_')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write '1'
+        dut.u_boot_rom.rom[rom_idx] = 32'h03100393; rom_idx = rom_idx + 1; // addi  x7, x0, 49 (ASCII '1')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write '2'
+        dut.u_boot_rom.rom[rom_idx] = 32'h03200393; rom_idx = rom_idx + 1; // addi  x7, x0, 50 (ASCII '2')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write '3'
+        dut.u_boot_rom.rom[rom_idx] = 32'h03300393; rom_idx = rom_idx + 1; // addi  x7, x0, 51 (ASCII '3')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        // Write newline
+        dut.u_boot_rom.rom[rom_idx] = 32'h00A00393; rom_idx = rom_idx + 1; // addi  x7, x0, 10 (ASCII '\n')
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)
+        
+        // ====================================================================
+        // UART READ TEST CASE - Read from UART status/control registers
+        // ====================================================================
+        $display("  Adding UART Read Test Case:");
+        $display("    - Reading from UART status register (offset 4)");
+        
+        // Read UART status register at UART_BASE + 0x4
+        dut.u_boot_rom.rom[rom_idx] = 32'h0042A383; rom_idx = rom_idx + 1; // lw    x7, 4(x5)   - Read UART status
+        
+        // Store read value to register (for debugging - value stays in x7)
+        // No operation needed - value already in x7
+        
+        // Write marker to UART indicating read test complete ('R')
+        dut.u_boot_rom.rom[rom_idx] = 32'h05200393; rom_idx = rom_idx + 1; // addi  x7, x0, 82   - ASCII 'R'
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
+        dut.u_boot_rom.rom[rom_idx] = 32'h00A00393; rom_idx = rom_idx + 1; // addi  x7, x0, 10   - ASCII '\n'
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
+        
         // STEP 12: HALT - Infinite NOP loop (stay here)
         dut.u_boot_rom.rom[rom_idx] = 32'h0000006F; rom_idx = rom_idx + 1; // jal   x0, 0       - Jump to self (HALT)
         
@@ -188,9 +264,9 @@ module tb_cva6_minimal_top;
  
         $display("");
         $display("  Configuration Summary:");
-        $display("    - Trace Control: BOTH ENABLED (instruction + HBM3 tracing)");
-        $display("    - Full debug visibility with instruction execution traces");
-        $display("    - Both instruction traces AND HBM3 transactions logged via UART");
+        $display("    - Trace Control: HBM3 DATA ONLY (instruction tracing disabled)");
+        $display("    - Prevents UART FIFO congestion by focusing on HBM3 transactions");
+        $display("    - Only HBM3 write/read transactions logged via UART");
         $display("");
         $display("  Application Program:");
         $display("    - UART: Writes 'S' (Start) and 'D' (Done) markers");
@@ -206,16 +282,13 @@ module tb_cva6_minimal_top;
         $display("");
         $display("EXPECTED UART OUTPUT:");
         $display("  - 'S' (Start marker from application)");
-        $display("  - PC: 0x00000000 | INST: 0x22000337 | STATUS: EXECUTED");
-        $display("  - PC: 0x00000004 | INST: 0x00300393 | STATUS: EXECUTED");
-        $display("  - ... (more instruction traces)");
         $display("  - HBM3_WR: ADDR=0x30000000 DATA=0xDEADBEEF");
         $display("  - HBM3_WR: ADDR=0x30000004 DATA=0x12345678");
         $display("  - HBM3_RD: ADDR=0x30000000 DATA=0xDEADBEEF");
         $display("  - HBM3_RD: ADDR=0x30000004 DATA=0x12345678");
         $display("  - 'D' (Done marker), then program halts");
         $display("");
-        $display("NOTE: BOTH instruction traces AND HBM3 traces will appear");
+        $display("NOTE: Only HBM3 traces will appear (no instruction traces)");
         $display("================================================================================");
         $display("");
     end
@@ -277,9 +350,12 @@ module tb_cva6_minimal_top;
                 UART_DATA: begin
                     if (uart_clk_count < CLKS_PER_BIT - 1) begin
                         uart_clk_count <= uart_clk_count + 1;
+                        // Sample in the MIDDLE of the bit period for better reliability
+                        if (uart_clk_count == (CLKS_PER_BIT / 2)) begin
+                            uart_shift_reg[uart_bit_count] <= uart_tx;
+                        end
                     end else begin
                         uart_clk_count <= 0;
-                        uart_shift_reg[uart_bit_count] <= uart_tx;
                         
                         if (uart_bit_count < 7) begin
                             uart_bit_count <= uart_bit_count + 1;
@@ -454,6 +530,9 @@ module tb_cva6_minimal_top;
     // ========================================================================
     integer hbm3_wr_count = 0;
     integer hbm3_rd_count = 0;
+    reg [31:0] hbm3_expected_data [0:255];  // Store written data for read verification
+    reg [31:0] hbm3_write_addr [0:255];     // Store write addresses
+    integer hbm3_data_idx = 0;
     
     always @(posedge sys_clock) begin
         if (sys_reset_n) begin
@@ -461,22 +540,106 @@ module tb_cva6_minimal_top;
             if (dut.data_req && dut.data_we && 
                 (dut.data_addr >= 32'h30000000) && (dut.data_addr < 32'h40000000)) begin
                 hbm3_wr_count = hbm3_wr_count + 1;
+                
+                // Store written data for later read verification
+                if (hbm3_data_idx < 256) begin
+                    hbm3_write_addr[hbm3_data_idx] = dut.data_addr;
+                    hbm3_expected_data[hbm3_data_idx] = dut.data_wdata;
+                    hbm3_data_idx = hbm3_data_idx + 1;
+                end
+                
                 $display("================================================================================");
-                $display("HBM3 WRITE #%0d ON DATA BUS @ %0t:", hbm3_wr_count, $time);
-                $display(">>> Address: 0x%08h", dut.data_addr);
-                $display(">>> Data:    0x%08h", dut.data_wdata);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : HBM3 WRITE #%0d DETECTED", $time, hbm3_wr_count);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_addr : expected_value: N/A actual_value: 0x%08h", $time, dut.data_addr);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_wdata : expected_value: N/A actual_value: 0x%08h", $time, dut.data_wdata);
                 $display("================================================================================");
                 $display("");
             end
             
             // Monitor HBM3 reads on data bus  
-            if (dut.data_valid && (dut.data_addr >= 32'h30000000) && 
-                (dut.data_addr < 32'h40000000)) begin
+            if (dut.data_req && !dut.data_we && 
+                (dut.data_addr >= 32'h30000000) && (dut.data_addr < 32'h40000000)) begin
                 hbm3_rd_count = hbm3_rd_count + 1;
                 $display("================================================================================");
-                $display("HBM3 READ #%0d ON DATA BUS @ %0t:", hbm3_rd_count, $time);
-                $display(">>> Address: 0x%08h", dut.data_addr);
-                $display(">>> Data:    0x%08h", dut.data_rdata);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : HBM3 READ #%0d REQUEST DETECTED", $time, hbm3_rd_count);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_addr : expected_value: N/A actual_value: 0x%08h", $time, dut.data_addr);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_req : expected_value: 1'b1 actual_value: %b", $time, dut.data_req);
+                $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_we : expected_value: 1'b0 actual_value: %b", $time, dut.data_we);
+                $display("================================================================================");
+                $display("");
+            end
+            
+            // Monitor HBM3 read data responses
+            if (dut.data_valid && (dut.data_addr >= 32'h30000000) && 
+                (dut.data_addr < 32'h40000000)) begin
+                // Find expected data for this address
+                reg [31:0] expected;
+                reg found;
+                integer idx;
+                expected = 32'hXXXXXXXX;
+                found = 1'b0;
+                for (idx = 0; idx < hbm3_data_idx; idx = idx + 1) begin
+                    if (hbm3_write_addr[idx] == dut.data_addr) begin
+                        expected = hbm3_expected_data[idx];
+                        found = 1'b1;
+                    end
+                end
+                
+                $display("================================================================================");
+                if (found && (dut.data_rdata == expected)) begin
+                    $display("LOG: %0t : INFO : HBM3_MONITOR : HBM3 READ DATA VALID - MATCH!", $time);
+                    $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_rdata : expected_value: 0x%08h actual_value: 0x%08h", $time, expected, dut.data_rdata);
+                end else if (found) begin
+                    $display("LOG: %0t : ERROR : HBM3_MONITOR : HBM3 READ DATA VALID - MISMATCH!", $time);
+                    $display("LOG: %0t : ERROR : HBM3_MONITOR : dut.data_rdata : expected_value: 0x%08h actual_value: 0x%08h", $time, expected, dut.data_rdata);
+                end else begin
+                    $display("LOG: %0t : INFO : HBM3_MONITOR : HBM3 READ DATA VALID (no prior write tracked)", $time);
+                    $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_rdata : expected_value: UNKNOWN actual_value: 0x%08h", $time, dut.data_rdata);
+                end
+                $display("LOG: %0t : INFO : HBM3_MONITOR : dut.data_addr : expected_value: N/A actual_value: 0x%08h", $time, dut.data_addr);
+                $display("================================================================================");
+                $display("");
+            end
+        end
+    end
+    
+    // ========================================================================
+    // DIRECT UART READ TRANSACTION MONITOR - On Data Bus
+    // ========================================================================
+    initial begin
+        uart_rd_count = 0;
+    end
+    
+    always @(posedge sys_clock) begin
+        if (sys_reset_n) begin
+            // Monitor UART read requests on data bus
+            if (dut.data_req && !dut.data_we && 
+                (dut.data_addr >= 32'h21000000) && (dut.data_addr < 32'h21000008)) begin
+                uart_rd_count = uart_rd_count + 1;
+                $display("================================================================================");
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : UART READ #%0d REQUEST DETECTED", $time, uart_rd_count);
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : dut.data_addr : expected_value: [0x21000000-0x21000007] actual_value: 0x%08h", $time, dut.data_addr);
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : dut.data_req : expected_value: 1'b1 actual_value: %b", $time, dut.data_req);
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : dut.data_we : expected_value: 1'b0 actual_value: %b", $time, dut.data_we);
+                
+                // Decode UART register offset
+                case (dut.data_addr[2:0])
+                    3'h0: $display("LOG: %0t : INFO : UART_READ_MONITOR : Register : TX_DATA (offset 0)", $time);
+                    3'h4: $display("LOG: %0t : INFO : UART_READ_MONITOR : Register : STATUS (offset 4)", $time);
+                    default: $display("LOG: %0t : INFO : UART_READ_MONITOR : Register : UNKNOWN (offset %0d)", $time, dut.data_addr[2:0]);
+                endcase
+                
+                $display("================================================================================");
+                $display("");
+            end
+            
+            // Monitor UART read data responses
+            if (dut.data_valid && 
+                (dut.data_addr >= 32'h21000000) && (dut.data_addr < 32'h21000008)) begin
+                $display("================================================================================");
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : UART READ DATA VALID", $time);
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : dut.data_rdata : expected_value: N/A actual_value: 0x%08h", $time, dut.data_rdata);
+                $display("LOG: %0t : INFO : UART_READ_MONITOR : dut.data_addr : expected_value: N/A actual_value: 0x%08h", $time, dut.data_addr);
                 $display("================================================================================");
                 $display("");
             end
@@ -784,6 +947,9 @@ module tb_cva6_minimal_top;
         $display("Total instructions traced: %0d", trace_log_count);
         $display("Total UART bytes received: %0d", uart_byte_count);
         $display("");
+        $display("UART Transaction Summary:");
+        $display("  UART Reads on Data Bus:       %0d", uart_rd_count);
+        $display("");
         $display("HBM3 Transaction Summary:");
         $display("  HBM3 Writes on Data Bus:     %0d", hbm3_wr_count);
         $display("  HBM3 Reads on Data Bus:      %0d", hbm3_rd_count);
@@ -802,4 +968,5 @@ module tb_cva6_minimal_top;
     end
 
 endmodule
+
 

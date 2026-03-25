@@ -370,8 +370,8 @@ module cva6_minimal_top (
     // ========================================================================
     simple_uart_tx #(
         .CLOCK_FREQ (125_000_000),
-        .BAUD_RATE  (115_200),
-        .FIFO_DEPTH (16)
+        .BAUD_RATE  (921_600),  // 8x faster than 115200 for high-speed trace output
+        .FIFO_DEPTH (256)        // Increased from 16 to handle burst traffic
     ) u_uart_debug (
         .clock          (clk),
         .reset          (reset),

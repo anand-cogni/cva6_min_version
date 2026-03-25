@@ -30,6 +30,7 @@
 // Supported Instructions:
 //   - LUI   (Load Upper Immediate)
 //   - ADDI  (Add Immediate)
+//   - LW    (Load Word)
 //   - SW    (Store Word)
 //   - BNE   (Branch Not Equal)
 //   - JAL   (Jump And Link)
@@ -65,6 +66,8 @@ module simple_riscv_core (
     reg [31:0] pc;           // Program Counter
     reg [31:0] regs [0:31];  // Register File (x0-x31)
     reg [2:0]  state;        // FSM state
+    reg [4:0]  mem_rd;       // Destination register for load operations
+    reg        mem_is_load;  // Track if memory operation is load (vs store)
     
     // FSM States
     localparam FETCH   = 3'd0;
@@ -101,6 +104,7 @@ module simple_riscv_core (
     // Instruction decode
     wire is_lui   = (opcode == 7'b0110111);  // LUI
     wire is_addi  = (opcode == 7'b0010011) && (funct3 == 3'b000);  // ADDI
+    wire is_lw    = (opcode == 7'b0000011) && (funct3 == 3'b010);  // LW
     wire is_sw    = (opcode == 7'b0100011) && (funct3 == 3'b010);  // SW
     wire is_bne   = (opcode == 7'b1100011) && (funct3 == 3'b001);  // BNE
     wire is_jal   = (opcode == 7'b1101111);  // JAL
@@ -183,13 +187,24 @@ module simple_riscv_core (
                         state <= FETCH;
                         pc <= next_pc;
                         
+                    end else if (is_lw) begin
+                        // LW: rd = mem[rs1 + imm_i]
+                        data_addr <= regs[rs1] + imm_i;
+                        data_be <= 4'b1111;  // Read all bytes
+                        data_req <= 1'b1;
+                        data_we <= 1'b0;     // Read operation
+                        mem_rd <= rd;        // Save destination register
+                        mem_is_load <= 1'b1; // Mark as load operation
+                        state <= MEMORY;
+                        
                     end else if (is_sw) begin
                         // SW: mem[rs1 + imm_s] = rs2
                         data_addr <= regs[rs1] + imm_s;
                         data_wdata <= regs[rs2];
                         data_be <= 4'b1111;  // Write all bytes
                         data_req <= 1'b1;
-                        data_we <= 1'b1;
+                        data_we <= 1'b1;     // Write operation
+                        mem_is_load <= 1'b0; // Mark as store operation
                         state <= MEMORY;
                         
                     end else if (is_bne) begin
@@ -222,7 +237,14 @@ module simple_riscv_core (
                     // Memory operation complete
                     committed_pc = pc;
                     committed_instr = instr;
-                    instruction_committed = 1'b1;  // Store instruction committed
+                    instruction_committed = 1'b1;  // Memory instruction committed
+                    
+                    if (mem_is_load) begin
+                        // Load: Capture data from memory and write to register
+                        if (mem_rd != 0) regs[mem_rd] <= data_rdata;
+                    end
+                    
+                    // Clear memory control signals
                     data_req <= 1'b0;
                     data_we <= 1'b0;
                     state <= FETCH;

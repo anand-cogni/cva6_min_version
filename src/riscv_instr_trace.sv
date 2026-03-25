@@ -245,19 +245,27 @@ module riscv_instr_trace #(
                 char_index <= '0;
             end
             
-            // Increment character index when character sent
-            if ((state == SEND_PREFIX || state == SEND_MID1 || 
-                 state == SEND_MID2 || state == SEND_STATUS ||
-                 state == SEND_HBM3_PREFIX || state == SEND_ADDR_LABEL ||
-                 state == SEND_DATA_LABEL) && uart_ready) begin
+            // Reset char_index when transitioning TO hex digit states
+            if ((next_state == SEND_PC || next_state == SEND_INSTR || 
+                 next_state == SEND_ADDR || next_state == SEND_DATA) &&
+                (state != next_state)) begin
+                char_index <= '0;
+            end
+            // Increment character index when character sent in string states
+            else if ((state == SEND_PREFIX || state == SEND_MID1 || 
+                      state == SEND_MID2 || state == SEND_STATUS ||
+                      state == SEND_HBM3_PREFIX || state == SEND_ADDR_LABEL ||
+                      state == SEND_DATA_LABEL) && uart_ready) begin
                 char_index <= char_index + 1'b1;
             end
-            
-            // Reset char_index for hex digit sequences
-            if ((state == SEND_PC || state == SEND_INSTR || 
-                 state == SEND_ADDR || state == SEND_DATA) && 
-                char_index == 7 && uart_ready) begin
-                char_index <= '0;
+            // Increment character index in hex digit states
+            else if ((state == SEND_PC || state == SEND_INSTR || 
+                      state == SEND_ADDR || state == SEND_DATA) && uart_ready) begin
+                if (char_index < 7) begin
+                    char_index <= char_index + 1'b1;
+                end else begin
+                    char_index <= '0;  // Reset after sending 8th hex digit
+                end
             end
         end
     end
