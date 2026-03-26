@@ -27,7 +27,7 @@ module cva6_minimal_top (
     // UART Debug Output
     output wire         uart_tx,        // UART transmit pin for debug
     
-    // HBM3 Physical Interface (exposed for connection to DRAM model/chip)
+    // HBM3 PHY-to-DRAM Interface (exposed for testbench connectivity)
     output wire         phy_to_dram_hbm_ck_t,
     output wire         phy_to_dram_hbm_ck_c,
     output wire         phy_to_dram_hbm_cke,
@@ -37,6 +37,7 @@ module cva6_minimal_top (
     inout  wire [8:0]   phy_to_dram_io_hbm_ecc,
     output wire [15:0]  phy_to_dram_hbm_dm
 );
+
 
     // ========================================================================
     // Parameters
@@ -370,8 +371,8 @@ module cva6_minimal_top (
     // ========================================================================
     simple_uart_tx #(
         .CLOCK_FREQ (125_000_000),
-        .BAUD_RATE  (921_600),  // 8x faster than 115200 for high-speed trace output
-        .FIFO_DEPTH (256)        // Increased from 16 to handle burst traffic
+        .BAUD_RATE  (921_600),
+        .FIFO_DEPTH (256)
     ) u_uart_debug (
         .clock          (clk),
         .reset          (reset),
@@ -632,7 +633,7 @@ module cva6_minimal_top (
         .rvalid         (axi_rvalid),
         .rready         (axi_rready),
         
-        // HBM3 DRAM Physical Interface
+        // HBM3 PHY-to-DRAM Interface
         .phy_to_dram_hbm_ck_t   (phy_to_dram_hbm_ck_t),
         .phy_to_dram_hbm_ck_c   (phy_to_dram_hbm_ck_c),
         .phy_to_dram_hbm_cke    (phy_to_dram_hbm_cke),
@@ -641,7 +642,7 @@ module cva6_minimal_top (
         .phy_to_dram_io_hbm_dq  (phy_to_dram_io_hbm_dq),
         .phy_to_dram_io_hbm_ecc (phy_to_dram_io_hbm_ecc),
         .phy_to_dram_hbm_dm     (phy_to_dram_hbm_dm)
-    );
+   );
     
     // ========================================================================
     // Data Read Multiplexer
