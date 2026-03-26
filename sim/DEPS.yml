@@ -128,6 +128,12 @@ riscv_instr_trace:
     - ../src/riscv_instr_trace.sv
   top: riscv_instr_trace
 
+# Memory-to-AXI Bridge
+mem_to_axi_bridge:
+  deps:
+    - ../src/mem_to_axibridge.sv
+  top: mem_to_axi_bridge
+
 # ============================================================================
 # CVA6 + HBM3 Integration Target
 # ============================================================================
@@ -141,6 +147,7 @@ cva6_hbm3_system:
     - ../src/simple_uart_tx.v
     - ../src/axi_addr_map.v
     - ../src/riscv_instr_trace.sv
+    - ../src/mem_to_axibridge.sv
     - hbm3_controller
     - ../src/cva6_minimal_top.v
   top: cva6_minimal_top
@@ -160,6 +167,7 @@ bench_cva6_hbm3:
     - ../src/simple_uart_tx.v
     - ../src/axi_addr_map.v
     - ../src/riscv_instr_trace.sv
+    - ../src/mem_to_axibridge.sv
     - hbm3_controller
     - ../src/cva6_minimal_top.v
     - ../tb/tb_cva6_minimal_top.v
@@ -178,6 +186,7 @@ bench_hbm3_memtest:
     - ../src/simple_uart_tx.v
     - ../src/axi_addr_map.v
     - ../src/riscv_instr_trace.sv
+    - ../src/mem_to_axibridge.sv
     - hbm3_controller
     - ../src/cva6_minimal_top.v
     - ../tb/tb_hbm3_memtest.v
@@ -200,6 +209,7 @@ cva6_system:
     - ../src/simple_uart_tx.v
     - ../src/axi_addr_map.v
     - ../src/riscv_instr_trace.sv
+    - ../src/mem_to_axibridge.sv
     - ../src/cva6_minimal_top.v
   top: cva6_minimal_top
 
