@@ -647,16 +647,49 @@ module cva6_minimal_top (
     // ========================================================================
     // Data Read Multiplexer
     // ========================================================================
-    assign data_rdata = ram_select        ? ram_rdata :
+    // Properly multiplexed data read path for all memory-mapped peripherals
+  /*  assign data_rdata = ram_select        ? ram_rdata :
                         led_select        ? led_reg :
                         uart_select       ? uart_rdata :
                         hbm3_select       ? hbm3_rdata :
                         hbm3_cfg_select   ? apb_rdata_reg :
                         trace_ctrl_select ? {30'h0, trace_data_enable, trace_enable} :
-                        32'h0000_0000;
-    
+                        32'h0000_0000;*/
+//Data Read Register (Synchronized Return Path)
+// ========================================================================
+// ========================================================================
+// Data Read Register (Synchronized Return Path)
+// ========================================================================
+reg [31:0] data_rdata_reg;
+
+//HBM3 response can arrive later, when hbm3_select is no longer active.
+always @(posedge clk) begin
+    if (reset) begin
+        data_rdata_reg <= 32'h0;
+    end else begin
+        if (hbm3_valid)
+            data_rdata_reg <= hbm3_rdata;
+
+        else if (ram_select && data_req)
+            data_rdata_reg <= ram_rdata;
+
+        else if (led_select && data_req)
+            data_rdata_reg <= led_reg;
+
+        else if (uart_select && data_req)
+            data_rdata_reg <= uart_rdata;
+
+        else if (hbm3_cfg_select && apb_state == APB_IDLE)
+            data_rdata_reg <= apb_rdata_reg;
+
+        else if (trace_ctrl_select && data_req)
+            data_rdata_reg <= {30'h0, trace_data_enable, trace_enable};
+    end
+end
+
+assign data_rdata = data_rdata_reg;
     // Data valid generation
-    assign data_valid = (ram_select || led_select || uart_select || trace_ctrl_select) ? data_req :
+   assign data_valid = (ram_select || led_select || uart_select || trace_ctrl_select) ? data_req :
                         hbm3_select ? hbm3_valid :
                         hbm3_cfg_select ? (apb_state == APB_IDLE) :
                         1'b0;
@@ -681,6 +714,7 @@ module cva6_minimal_top (
         .data_addr   (data_addr),
         .data_wdata  (data_wdata),
         .data_rdata  (data_rdata),
+        //.data_valid  (data_valid),     // Connect data_valid signal
         
         // Trace interface outputs
         // NOTE: simple_riscv_core module must be updated to include these outputs:
@@ -705,4 +739,3 @@ module cva6_minimal_top (
     assign led[3] = !trace_fifo_empty;                  // Trace activity indicator
 
 endmodule
-
