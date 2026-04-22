@@ -71,6 +71,9 @@ module tb_cva6_minimal_top;
     // UART Read Monitor Variables
     integer uart_rd_count;
     
+    // Post-Boot Test Synchronization
+    reg init_done;
+    
     // Instruction Trace Log
     reg [31:0] trace_log_pc [0:1023];
     reg [31:0] trace_log_instr [0:1023];
@@ -164,7 +167,9 @@ module tb_cva6_minimal_top;
         dut.u_boot_rom.rom[rom_idx] = 32'h30000437; rom_idx = rom_idx + 1; // lui   x8, 0x30000 - HBM3 mem base
         
         // STEP 6: Perform HBM3 Write Transaction #1
-        dut.u_boot_rom.rom[rom_idx] = 32'hDEADB4B7; rom_idx = rom_idx + 1; // lui   x9, 0xDEADB - Test pattern upper
+        // Note: 0xEEF has bit11=1 so addi sign-extends to -273.
+        // Use lui 0xDEADC so: 0xDEADC000 + 0xFFFFFEEF = 0xDEADBEEF
+        dut.u_boot_rom.rom[rom_idx] = 32'hDEADC4B7; rom_idx = rom_idx + 1; // lui   x9, 0xDEADC - compensate for sign-ext
         dut.u_boot_rom.rom[rom_idx] = 32'hEEF48493; rom_idx = rom_idx + 1; // addi  x9, x9, 0xEEF - x9 = 0xDEADBEEF
         dut.u_boot_rom.rom[rom_idx] = 32'h00942023; rom_idx = rom_idx + 1; // sw    x9, 0(x8)   - Write to HBM3[0x30000000]
         
@@ -184,6 +189,108 @@ module tb_cva6_minimal_top;
         dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
         
         // STEP 11: Write Newline to UART
+        dut.u_boot_rom.rom[rom_idx] = 32'h00A00393; rom_idx = rom_idx + 1; // addi  x7, x0, 10   - ASCII '\n'
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
+        
+        // ====================================================================
+        // POST-BOOT MULTI WRITE TEST - 8 Additional HBM3 Write Transactions
+        // Runs after 'D' Done marker (init_done). x8 still holds 0x30000000.
+        // Patterns: 0x11111111..0x88888888
+        // Addresses: 0x30000008..0x30000024
+        // ====================================================================
+        $display("  Adding Post-Boot Multi-Write Test Cases (8 writes):");
+        
+        // Write #3: 0x11111111 -> HBM3[0x30000008]
+        dut.u_boot_rom.rom[rom_idx] = 32'h111116B7; rom_idx = rom_idx + 1; // lui   x13, 0x11111
+        dut.u_boot_rom.rom[rom_idx] = 32'h11168693; rom_idx = rom_idx + 1; // addi  x13, x13, 0x111  -> x13 = 0x11111111
+        dut.u_boot_rom.rom[rom_idx] = 32'h00D42423; rom_idx = rom_idx + 1; // sw    x13, 8(x8)   -> HBM3[0x30000008]
+        
+        // Write #4: 0x22222222 -> HBM3[0x3000000C]
+        dut.u_boot_rom.rom[rom_idx] = 32'h22222737; rom_idx = rom_idx + 1; // lui   x14, 0x22222
+        dut.u_boot_rom.rom[rom_idx] = 32'h22270713; rom_idx = rom_idx + 1; // addi  x14, x14, 0x222  -> x14 = 0x22222222
+        dut.u_boot_rom.rom[rom_idx] = 32'h00E42623; rom_idx = rom_idx + 1; // sw    x14, 12(x8)  -> HBM3[0x3000000C]
+        
+        // Write #5: 0x33333333 -> HBM3[0x30000010]
+        dut.u_boot_rom.rom[rom_idx] = 32'h333337B7; rom_idx = rom_idx + 1; // lui   x15, 0x33333
+        dut.u_boot_rom.rom[rom_idx] = 32'h33378793; rom_idx = rom_idx + 1; // addi  x15, x15, 0x333  -> x15 = 0x33333333
+        dut.u_boot_rom.rom[rom_idx] = 32'h00F42823; rom_idx = rom_idx + 1; // sw    x15, 16(x8)  -> HBM3[0x30000010]
+        
+        // Write #6: 0x44444444 -> HBM3[0x30000014]
+        dut.u_boot_rom.rom[rom_idx] = 32'h44444837; rom_idx = rom_idx + 1; // lui   x16, 0x44444
+        dut.u_boot_rom.rom[rom_idx] = 32'h44480813; rom_idx = rom_idx + 1; // addi  x16, x16, 0x444  -> x16 = 0x44444444
+        dut.u_boot_rom.rom[rom_idx] = 32'h01042A23; rom_idx = rom_idx + 1; // sw    x16, 20(x8)  -> HBM3[0x30000014]
+        
+        // ====================================================================
+        // POST-BOOT MULTI READ TEST - Readback all 4 new addresses
+        // Uses x17 as scratch register for all reads
+        // ====================================================================
+        $display("  Adding Post-Boot Multi-Read Test Cases (reads #3-6):");
+        
+        // Read #3: HBM3[0x30000008] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h00842883; rom_idx = rom_idx + 1; // lw    x17, 8(x8)   -> Read HBM3[0x30000008]
+        
+        // Read #4: HBM3[0x3000000C] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h00C42883; rom_idx = rom_idx + 1; // lw    x17, 12(x8)  -> Read HBM3[0x3000000C]
+        
+        // Read #5: HBM3[0x30000010] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h01042883; rom_idx = rom_idx + 1; // lw    x17, 16(x8)  -> Read HBM3[0x30000010]
+        
+        // Read #6: HBM3[0x30000014] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h01442883; rom_idx = rom_idx + 1; // lw    x17, 20(x8)  -> Read HBM3[0x30000014]
+        
+        // ====================================================================
+        // EXTENDED WRITE TEST - 4 More HBM3 Write Transactions (#7-#10)
+        // Patterns: 0x55555555, 0x66666666, 0x77777777, 0x88888888
+        // Addresses: 0x30000018, 0x3000001C, 0x30000020, 0x30000024
+        // ====================================================================
+        $display("  Adding Extended Write Test Cases (writes #7-10):");
+        
+        // Write #7: 0x55555555 -> HBM3[0x30000018]
+        // 0x55555 << 12 = 0x55555000; 0x555 bit11=0 (no sign-ext issue)
+        dut.u_boot_rom.rom[rom_idx] = 32'h55555937; rom_idx = rom_idx + 1; // lui   x18, 0x55555
+        dut.u_boot_rom.rom[rom_idx] = 32'h55590913; rom_idx = rom_idx + 1; // addi  x18, x18, 0x555  -> x18 = 0x55555555
+        dut.u_boot_rom.rom[rom_idx] = 32'h01242C23; rom_idx = rom_idx + 1; // sw    x18, 24(x8)  -> HBM3[0x30000018]
+        
+        // Write #8: 0x66666666 -> HBM3[0x3000001C]
+        // 0x66666 << 12 = 0x66666000; 0x666 bit11=0 (no sign-ext issue)
+        dut.u_boot_rom.rom[rom_idx] = 32'h666669B7; rom_idx = rom_idx + 1; // lui   x19, 0x66666
+        dut.u_boot_rom.rom[rom_idx] = 32'h66698993; rom_idx = rom_idx + 1; // addi  x19, x19, 0x666  -> x19 = 0x66666666
+        dut.u_boot_rom.rom[rom_idx] = 32'h01342E23; rom_idx = rom_idx + 1; // sw    x19, 28(x8)  -> HBM3[0x3000001C]
+        
+        // Write #9: 0x77777777 -> HBM3[0x30000020]
+        // 0x77777 << 12 = 0x77777000; 0x777 bit11=0 (no sign-ext issue)
+        dut.u_boot_rom.rom[rom_idx] = 32'h77777A37; rom_idx = rom_idx + 1; // lui   x20, 0x77777
+        dut.u_boot_rom.rom[rom_idx] = 32'h777A0A13; rom_idx = rom_idx + 1; // addi  x20, x20, 0x777  -> x20 = 0x77777777
+        dut.u_boot_rom.rom[rom_idx] = 32'h03442023; rom_idx = rom_idx + 1; // sw    x20, 32(x8)  -> HBM3[0x30000020]
+        
+        // Write #10: 0x88888888 -> HBM3[0x30000024]
+        // 0x888 bit11=1 -> use lui 0x88889 to compensate sign-ext
+        // 0x88889000 + sign_ext(0x888) = 0x88889000 + 0xFFFFF888 = 0x88888888
+        dut.u_boot_rom.rom[rom_idx] = 32'h88889AB7; rom_idx = rom_idx + 1; // lui   x21, 0x88889
+        dut.u_boot_rom.rom[rom_idx] = 32'h888A8A93; rom_idx = rom_idx + 1; // addi  x21, x21, 0x888  -> x21 = 0x88888888
+        dut.u_boot_rom.rom[rom_idx] = 32'h03542223; rom_idx = rom_idx + 1; // sw    x21, 36(x8)  -> HBM3[0x30000024]
+        
+        // ====================================================================
+        // EXTENDED READ TEST - Read Back Writes #7-#10
+        // Uses x17 as scratch register
+        // ====================================================================
+        $display("  Adding Extended Read Test Cases (reads #7-10):");
+        
+        // Read #7: HBM3[0x30000018] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h01842883; rom_idx = rom_idx + 1; // lw    x17, 24(x8)  -> Read HBM3[0x30000018]
+        
+        // Read #8: HBM3[0x3000001C] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h01C42883; rom_idx = rom_idx + 1; // lw    x17, 28(x8)  -> Read HBM3[0x3000001C]
+        
+        // Read #9: HBM3[0x30000020] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h02042883; rom_idx = rom_idx + 1; // lw    x17, 32(x8)  -> Read HBM3[0x30000020]
+        
+        // Read #10: HBM3[0x30000024] -> x17
+        dut.u_boot_rom.rom[rom_idx] = 32'h02442883; rom_idx = rom_idx + 1; // lw    x17, 36(x8)  -> Read HBM3[0x30000024]
+        
+        // Write 'T' (Test Complete) marker to UART (ASCII 84)
+        dut.u_boot_rom.rom[rom_idx] = 32'h05400393; rom_idx = rom_idx + 1; // addi  x7, x0, 84   - ASCII 'T'
+        dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
         dut.u_boot_rom.rom[rom_idx] = 32'h00A00393; rom_idx = rom_idx + 1; // addi  x7, x0, 10   - ASCII '\n'
         dut.u_boot_rom.rom[rom_idx] = 32'h0072A023; rom_idx = rom_idx + 1; // sw    x7, 0(x5)    - Write to UART
         
@@ -274,6 +381,22 @@ module tb_cva6_minimal_top;
         $display("    - HBM3 Write #2: 0x12345678 -> 0x30000004");
         $display("    - HBM3 Read #1:  Read from 0x30000000");
         $display("    - HBM3 Read #2:  Read from 0x30000004");
+        $display("    - HBM3 Write #3: 0x11111111 -> 0x30000008  [POST-BOOT]");
+        $display("    - HBM3 Write #4: 0x22222222 -> 0x3000000C  [POST-BOOT]");
+        $display("    - HBM3 Write #5: 0x33333333 -> 0x30000010  [POST-BOOT]");
+        $display("    - HBM3 Write #6: 0x44444444 -> 0x30000014  [POST-BOOT]");
+        $display("    - HBM3 Write #7: 0x55555555 -> 0x30000018  [EXTENDED]");
+        $display("    - HBM3 Write #8: 0x66666666 -> 0x3000001C  [EXTENDED]");
+        $display("    - HBM3 Write #9: 0x77777777 -> 0x30000020  [EXTENDED]");
+        $display("    - HBM3 Write #10:0x88888888 -> 0x30000024  [EXTENDED]");
+        $display("    - HBM3 Read #3:  Read from 0x30000008     [POST-BOOT]");
+        $display("    - HBM3 Read #4:  Read from 0x3000000C     [POST-BOOT]");
+        $display("    - HBM3 Read #5:  Read from 0x30000010     [POST-BOOT]");
+        $display("    - HBM3 Read #6:  Read from 0x30000014     [POST-BOOT]");
+        $display("    - HBM3 Read #7:  Read from 0x30000018     [EXTENDED]");
+        $display("    - HBM3 Read #8:  Read from 0x3000001C     [EXTENDED]");
+        $display("    - HBM3 Read #9:  Read from 0x30000020     [EXTENDED]");
+        $display("    - HBM3 Read #10: Read from 0x30000024     [EXTENDED]");
         $display("    - HALT: Program halts after completing test sequence");
         $display("");
         $display("Total ROM instructions used: %0d / 256", rom_idx);
@@ -417,6 +540,22 @@ module tb_cva6_minimal_top;
     initial begin
         uart_line_index = 0;
         uart_trace_count = 0;
+        init_done = 1'b0;
+    end
+    
+    // ========================================================================
+    // INIT_DONE DETECTOR - Set after 'D' (Done) marker received from UART
+    // This gates all post-boot test cases in the main test sequence
+    // ========================================================================
+    always @(posedge sys_clock) begin
+        if (!sys_reset_n) begin
+            init_done <= 1'b0;
+        end else begin
+            if (uart_rx_valid && uart_rx_data == 8'h44) begin  // ASCII 'D'
+                init_done <= 1'b1;
+                $display("LOG: %0t : INFO : BOOT_MONITOR : init_done : expected_value: 1'b1 actual_value: 1'b1 (Boot complete - 'D' marker received)", $time);
+            end
+        end
     end
     
     always @(posedge sys_clock) begin
@@ -938,6 +1077,105 @@ module tb_cva6_minimal_top;
         $display("");
         
         // ====================================================================
+        // Test 3: Post-Boot Multiple Write / Read Verification
+        // Runs ONLY after init_done (triggered by 'D' marker from boot code)
+        // Verifies: 10 HBM3 writes + 10 HBM3 reads with data integrity checks
+        // ====================================================================
+        test_count = test_count + 1;
+        $display("\n[Test %0d] Post-Boot Multiple Write/Read Verification", test_count);
+        
+        // --- Wait for init_done with timeout (polling loop - Verilator compatible) ---
+        if (!init_done) begin
+            integer wait_cycles;
+            $display("  Waiting for init_done (boot 'D' marker)...");
+            wait_cycles = 0;
+            while (!init_done && wait_cycles < 500000) begin
+                @(posedge sys_clock);
+                wait_cycles = wait_cycles + 1;
+            end
+            if (!init_done) begin
+                $display("LOG: %0t : ERROR : BOOT_MONITOR : init_done : expected_value: 1'b1 actual_value: 1'b0 (TIMEOUT waiting for boot Done marker)", $time);
+                error_count = error_count + 1;
+            end
+        end
+        
+        if (init_done) begin
+            $display("  init_done asserted - Proceeding with post-boot tests");
+            
+            // Wait extra cycles for post-boot transactions to complete
+            repeat(200000) @(posedge sys_clock);
+            
+            // --- Check 1: Total HBM3 Write Count ---
+            $display("\n  [Check 1] HBM3 Write Transaction Count");
+            if (hbm3_wr_count >= 10) begin
+                $display("LOG: %0t : INFO : POST_BOOT_TEST : hbm3_wr_count : expected_value: >=10 actual_value: %0d  PASS", $time, hbm3_wr_count);
+            end else begin
+                $display("LOG: %0t : ERROR : POST_BOOT_TEST : hbm3_wr_count : expected_value: >=10 actual_value: %0d  FAIL", $time, hbm3_wr_count);
+                error_count = error_count + 1;
+            end
+            
+            // --- Check 2: Total HBM3 Read Count ---
+            $display("\n  [Check 2] HBM3 Read Transaction Count");
+            if (hbm3_rd_count >= 10) begin
+                $display("LOG: %0t : INFO : POST_BOOT_TEST : hbm3_rd_count : expected_value: >=10 actual_value: %0d  PASS", $time, hbm3_rd_count);
+            end else begin
+                $display("LOG: %0t : ERROR : POST_BOOT_TEST : hbm3_rd_count : expected_value: >=10 actual_value: %0d  FAIL", $time, hbm3_rd_count);
+                error_count = error_count + 1;
+            end
+            
+            // --- Check 3: Data Integrity - verify each write address has correct readback ---
+            $display("\n  [Check 3] HBM3 Write/Read Data Integrity");
+            begin : data_integrity_check
+                reg [31:0] exp_data [0:9];
+                reg [31:0] exp_addr [0:9];
+                integer    match_count;
+                integer    ci, di;
+                
+                exp_addr[0] = 32'h30000000; exp_data[0] = 32'hDEADBEEF;
+                exp_addr[1] = 32'h30000004; exp_data[1] = 32'h12345678;
+                exp_addr[2] = 32'h30000008; exp_data[2] = 32'h11111111;
+                exp_addr[3] = 32'h3000000C; exp_data[3] = 32'h22222222;
+                exp_addr[4] = 32'h30000010; exp_data[4] = 32'h33333333;
+                exp_addr[5] = 32'h30000014; exp_data[5] = 32'h44444444;
+                exp_addr[6] = 32'h30000018; exp_data[6] = 32'h55555555;
+                exp_addr[7] = 32'h3000001C; exp_data[7] = 32'h66666666;
+                exp_addr[8] = 32'h30000020; exp_data[8] = 32'h77777777;
+                exp_addr[9] = 32'h30000024; exp_data[9] = 32'h88888888;
+                
+                match_count = 0;
+                for (ci = 0; ci < 10; ci = ci + 1) begin
+                    reg found_match;
+                    found_match = 1'b0;
+                    for (di = 0; di < hbm3_data_idx; di = di + 1) begin
+                        if (hbm3_write_addr[di] == exp_addr[ci]) begin
+                            if (hbm3_expected_data[di] == exp_data[ci]) begin
+                                $display("LOG: %0t : INFO : POST_BOOT_TEST : dut.data_wdata[addr=0x%08h] : expected_value: 0x%08h actual_value: 0x%08h  PASS",
+                                         $time, exp_addr[ci], exp_data[ci], hbm3_expected_data[di]);
+                                match_count = match_count + 1;
+                            end else begin
+                                $display("LOG: %0t : ERROR : POST_BOOT_TEST : dut.data_wdata[addr=0x%08h] : expected_value: 0x%08h actual_value: 0x%08h  FAIL",
+                                         $time, exp_addr[ci], exp_data[ci], hbm3_expected_data[di]);
+                                error_count = error_count + 1;
+                            end
+                            found_match = 1'b1;
+                        end
+                    end
+                    if (!found_match) begin
+                        $display("LOG: %0t : ERROR : POST_BOOT_TEST : dut.data_wdata[addr=0x%08h] : expected_value: 0x%08h actual_value: NOT_FOUND  FAIL",
+                                 $time, exp_addr[ci], exp_data[ci]);
+                        error_count = error_count + 1;
+                    end
+                end
+                $display("\n  Data integrity: %0d/10 addresses matched", match_count);
+            end
+            
+            $display("\n  Post-boot test complete.");
+        end else begin
+            $display("  SKIPPING post-boot checks - init_done never asserted");
+        end
+        $display("");
+        
+        // ====================================================================
         // Test Summary
         // ====================================================================
         $display("\n[Test Summary]");
@@ -951,15 +1189,16 @@ module tb_cva6_minimal_top;
         $display("  UART Reads on Data Bus:       %0d", uart_rd_count);
         $display("");
         $display("HBM3 Transaction Summary:");
-        $display("  HBM3 Writes on Data Bus:     %0d", hbm3_wr_count);
-        $display("  HBM3 Reads on Data Bus:      %0d", hbm3_rd_count);
+        $display("  HBM3 Writes on Data Bus:     %0d (expected >= 10)", hbm3_wr_count);
+        $display("  HBM3 Reads on Data Bus:      %0d (expected >= 10)", hbm3_rd_count);
         $display("  Tracer Captured HBM3 Writes: %0d", tracer_hbm3_wr);
         $display("  Tracer Captured HBM3 Reads:  %0d", tracer_hbm3_rd);
         
         if (error_count == 0) begin
-            $display("\n*** TEST PASSED ***");
+            $display("\nTEST PASSED");
         end else begin
-            $display("\n*** TEST FAILED ***");
+            $display("\nTEST FAILED");
+            $display("ERROR");
         end
         
         $display("================================================================================");
